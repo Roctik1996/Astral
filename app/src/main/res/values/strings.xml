@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Astral - персональный гороскоп</string>
+    <string name="astral">Astral</string>
+    <string name="personal_horoscop">Персональный гороскоп</string>
+    <string name="hint_email">EMAIL</string>
+    <string name="hint_pass">ПАРОЛЬ</string>
+    <string name="txt_login">Войти</string>
+    <string name="txt_create_account">или\n<u>создать аккаунт</u></string>
+    <string name="error_empty_mail">Email не заполнен</string>
+    <string name="error_email_invalid">Email указан не корректно</string>
+    <string name="error_pass_empty">Пароль не заполнен</string>
+    <string name="error_pass_invalid">Длина пароля менее 6 символов</string>
+    <string name="title_registration">Регистрация</string>
+    <string name="btn_next">Продолжить</string>
+    <string name="question_name">Как вас зовут?</string>
+    <string name="content_name">Для составления персонального гороскопа, астрологам очень важно знать Ваше имя</string>
+    <string name="hint_mane">ВВЕДИТЕ ИМЯ</string>
+    <string name="question_birthday">Ваша дата рождения</string>
+    <string name="content_birthday">Благодаря Вашей дате рождения, мы без проблем сможем определить Ваш знак зодиака и символ года</string>
+    <string name="question_gender">Выберите свой пол</string>
+    <string name="content_gender">Мы сможем рассчитать совместимость со знаком Вашего партнера</string>
+    <string name="hint_birthday">ВВЕДИТЕ ДАТУ РОЖДЕНИЯ</string>
+    <string name="question_city">Укажите свой город</string>
+    <string name="content_city">Мы сможем давать рекомендации относительно Вашего месторасположения</string>
+    <string name="hint_city">УКАЖИТЕ ГОРОД</string>
+    <string name="question_mail_pass">Укажите почту и пароль</string>
+    <string name="content_mail_pass">Чтобы защитить свой акаунт укажите пожалуйста почту и пароль</string>
+
+    <string name="nav_home">Моя страница</string>
+    <string name="nav_compatibility">Совместимость</string>
+    <string name="nav_china">Китайский гороскоп</string>
+    <string name="nav_element">Моя стихия</string>
+    <string name="nav_metal">Мой металл</string>
+    <string name="nav_planet">Моя планета</string>
+    <string name="content_compatibility">Выберите свой знак зодиака и знак зодиака Вашего партнера. Узнайте насколько вы совместимы</string>
+    <string name="btn_compatibility">Узнать совместимость</string>
+</resources>
