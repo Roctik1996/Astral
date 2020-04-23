@@ -2,6 +2,7 @@ package com.goroscop.astral.provider;
 
 import com.goroscop.astral.api.Backend;
 import com.goroscop.astral.model.Token;
+import com.goroscop.astral.model.User;
 import com.goroscop.astral.network.NetworkModule;
 
 import io.reactivex.Single;
@@ -26,9 +27,12 @@ public class PageProviderImpl {
         return mBackendService.registration(name, birthday, gender, city, email, password);
     }
 
-    public Single<Token> login(String email,
-                               String password) {
+    public Single<Token> login(String email, String password) {
         return mBackendService.login(email, password);
+    }
+
+    public Single<User> getUser(String token) {
+        return mBackendService.getUser(token);
     }
 
 

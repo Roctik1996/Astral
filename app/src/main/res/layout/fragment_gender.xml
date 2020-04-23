@@ -37,8 +37,8 @@
     <ToggleButton
         android:id="@+id/toggle_male"
         style="@style/toggleButtonMale"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/bg_toggle_male"
         app:layout_constraintEnd_toStartOf="@+id/toggle_female"
@@ -49,8 +49,8 @@
     <ToggleButton
         android:id="@+id/toggle_female"
         style="@style/toggleButtonMale"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/bg_toggle_female"
         app:layout_constraintEnd_toEndOf="parent"

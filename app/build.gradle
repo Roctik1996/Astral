@@ -57,4 +57,6 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+
+    implementation 'me.hiennguyen.circleseekbar:circleseekbar:1.0.1'
 }

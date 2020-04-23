@@ -9,4 +9,5 @@
     <color name="colorAppBar">#7C00DD</color>
     <color name="colorMenuLine">#7500D2</color>
     <color name="colorMenu">#4D008A</color>
+    <color name="colorLayout">#99453670</color>
 </resources>

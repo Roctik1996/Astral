@@ -1,6 +1,7 @@
 package com.goroscop.astral.api;
 
 import com.goroscop.astral.model.Token;
+import com.goroscop.astral.model.User;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -26,8 +27,7 @@ public interface Backend {
     Single<Token> login(@Part("email") String email,
                         @Part("password") String password);
 
-    @Multipart
     @GET("/api/user")
-    Single<String> getUser(@Header("Authorization") String token);
+    Single<User> getUser(@Header("Authorization") String token);
 
 }
