@@ -33,6 +33,7 @@ public class RegistrationPresenter extends MvpPresenter<ViewGetToken> {
                       String city,
                       String email,
                       String password) {
+        getViewState().showProgress(true);
         addBackgroundDisposable(
                 ProviderModule.getUserProvider().registration(name, birthday, gender, city, email, password)
                         .compose(RxUtils.ioToMainTransformerSingle())

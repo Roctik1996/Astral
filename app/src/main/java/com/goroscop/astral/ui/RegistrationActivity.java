@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -44,6 +47,9 @@ public class RegistrationActivity extends MvpAppCompatActivity implements Regist
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     private SharedPreferences mSettings;
 
+    private ProgressBar progressBar;
+    private FrameLayout frame;
+
     @InjectPresenter
     RegistrationPresenter registrationPresenter;
 
@@ -55,6 +61,9 @@ public class RegistrationActivity extends MvpAppCompatActivity implements Regist
         contentPager = findViewById(R.id.content_pager);
         btnNext = findViewById(R.id.btn_next);
         ImageView back = findViewById(R.id.icon_back);
+
+        progressBar = findViewById(R.id.progress);
+        frame = findViewById(R.id.frame);
 
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -175,7 +184,8 @@ public class RegistrationActivity extends MvpAppCompatActivity implements Regist
 
     @Override
     public void showProgress(boolean isLoading) {
-
+        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        frame.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 
     @Override

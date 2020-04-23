@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,9 +30,10 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
 public class LoginActivity extends MvpAppCompatActivity implements ViewGetToken {
 
     private EditText edtMail,edtPass;
-    private Button btnLogin;
-    private TextView txtReg;
     private SharedPreferences mSettings;
+
+    private ProgressBar progressBar;
+    private FrameLayout frame;
 
     @InjectPresenter
     LoginPresenter loginPresenter;
@@ -40,8 +44,11 @@ public class LoginActivity extends MvpAppCompatActivity implements ViewGetToken 
         setContentView(R.layout.activity_login);
         edtMail = findViewById(R.id.edt_mail);
         edtPass = findViewById(R.id.edt_pass);
-        btnLogin = findViewById(R.id.btn_login);
-        txtReg = findViewById(R.id.txt_registration);
+        Button btnLogin = findViewById(R.id.btn_login);
+        TextView txtReg = findViewById(R.id.txt_registration);
+
+        progressBar = findViewById(R.id.progress);
+        frame = findViewById(R.id.frame);
 
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -100,7 +107,8 @@ public class LoginActivity extends MvpAppCompatActivity implements ViewGetToken 
 
     @Override
     public void showProgress(boolean isLoading) {
-
+        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        frame.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 
     @Override
