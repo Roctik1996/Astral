@@ -10,4 +10,16 @@
     <color name="colorMenuLine">#7500D2</color>
     <color name="colorMenu">#4D008A</color>
     <color name="colorLayout">#99453670</color>
+
+    <color name="colorLove">#FF0099</color>
+    <color name="colorLoveLine">#38FF8FD2</color>
+    <color name="colorTextCircle">#CDBCFF</color>
+
+    <color name="colorHealth">#00C52B</color>
+    <color name="colorHealthLine">#3800C52B</color>
+
+    <color name="colorCareer">#FFB800</color>
+    <color name="colorCareerLine">#38FFB800</color>
+
+    <color name="colorTabLine">#CDBCFF</color>
 </resources>

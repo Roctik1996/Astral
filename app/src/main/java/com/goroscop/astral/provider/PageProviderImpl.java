@@ -1,6 +1,7 @@
 package com.goroscop.astral.provider;
 
 import com.goroscop.astral.api.Backend;
+import com.goroscop.astral.model.Horoscope;
 import com.goroscop.astral.model.Token;
 import com.goroscop.astral.model.User;
 import com.goroscop.astral.network.NetworkModule;
@@ -33,6 +34,10 @@ public class PageProviderImpl {
 
     public Single<User> getUser(String token) {
         return mBackendService.getUser(token);
+    }
+
+    public Single<Horoscope> getHoroscope(String token) {
+        return mBackendService.getHoroscope(token);
     }
 
 

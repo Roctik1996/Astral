@@ -11,12 +11,15 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.goroscop.astral.R;
 import com.goroscop.astral.model.User;
 import com.goroscop.astral.presenter.UserPresenter;
+import com.goroscop.astral.ui.fragment.HomeFragment;
 import com.goroscop.astral.ui.interfaces.NavigationInterface;
 import com.goroscop.astral.view.ViewGetUser;
 
@@ -57,13 +60,19 @@ public class MainActivity extends MvpAppCompatActivity implements NavigationInte
 
         if (mSettings.contains(APP_PREFERENCES_NAME)){
             if (!mSettings.getString(APP_PREFERENCES_NAME,"").equals("")){
-                //TODO: load main
+                loadFragment(new HomeFragment());
             }
             else
                 userPresenter.getUser("Token "+mSettings.getString(APP_PREFERENCES_TOKEN,""));
         }
         else
             userPresenter.getUser("Token "+mSettings.getString(APP_PREFERENCES_TOKEN,""));
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
     }
 
     @Override
@@ -105,6 +114,7 @@ public class MainActivity extends MvpAppCompatActivity implements NavigationInte
             editor.putString(APP_PREFERENCES_GENDER, user.getGender());
             editor.putString(APP_PREFERENCES_CITY, user.getCity());
             editor.apply();
+            loadFragment(new HomeFragment());
         }
     }
 

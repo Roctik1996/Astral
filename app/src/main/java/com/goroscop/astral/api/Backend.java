@@ -1,5 +1,6 @@
 package com.goroscop.astral.api;
 
+import com.goroscop.astral.model.Horoscope;
 import com.goroscop.astral.model.Token;
 import com.goroscop.astral.model.User;
 
@@ -29,5 +30,10 @@ public interface Backend {
 
     @GET("/api/user")
     Single<User> getUser(@Header("Authorization") String token);
+
+    @GET("/api/horoscope")
+    Single<Horoscope> getHoroscope(@Header("Authorization") String token);
+
+
 
 }

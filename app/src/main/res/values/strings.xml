@@ -40,4 +40,8 @@
     <string name="error_gender_empty">Выберите свой пол</string>
     <string name="error_invalid_mail_pass">Неверный email или пароль</string>
     <string name="error_email_exist">Пользователь с таким email уже существует!</string>
+    <string name="txt_love">Любовь</string>
+    <string name="txt_career">Карьера</string>
+    <string name="txt_health">Здоровье</string>
+    <string name="lucky_num">Счастливые номера</string>
 </resources>
