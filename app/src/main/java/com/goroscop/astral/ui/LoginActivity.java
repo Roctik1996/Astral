@@ -1,6 +1,8 @@
 package com.goroscop.astral.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
@@ -9,18 +11,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.goroscop.astral.R;
+import com.goroscop.astral.model.Token;
+import com.goroscop.astral.presenter.LoginPresenter;
+import com.goroscop.astral.view.ViewGetToken;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static android.text.TextUtils.isEmpty;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
 
-public class LoginActivity extends MvpAppCompatActivity {
+public class LoginActivity extends MvpAppCompatActivity implements ViewGetToken {
 
     private EditText edtMail,edtPass;
     private Button btnLogin;
     private TextView txtReg;
+    private SharedPreferences mSettings;
+
+    @InjectPresenter
+    LoginPresenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +43,11 @@ public class LoginActivity extends MvpAppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         txtReg = findViewById(R.id.txt_registration);
 
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+
         btnLogin.setOnClickListener(v -> {
             if (validate(edtMail.getText().toString(),edtPass.getText().toString())){
-                Toast.makeText(this, "OK",Toast.LENGTH_LONG).show();
+                loginPresenter.login(edtMail.getText().toString(),edtPass.getText().toString());
             }
         });
 
@@ -70,5 +84,27 @@ public class LoginActivity extends MvpAppCompatActivity {
 
     private static boolean isPasswordValid(String password) {
         return password.length() >= 6;
+    }
+
+    @Override
+    public void getToken(Token token) {
+        if (token!=null) {
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putString(APP_PREFERENCES_TOKEN, token.getToken());
+            editor.apply();
+            Intent mainActivity = new Intent(this,MainActivity.class);
+            startActivity(mainActivity);
+            finish();
+        }
+    }
+
+    @Override
+    public void showProgress(boolean isLoading) {
+
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(this, R.string.error_invalid_mail_pass, Toast.LENGTH_LONG).show();
     }
 }

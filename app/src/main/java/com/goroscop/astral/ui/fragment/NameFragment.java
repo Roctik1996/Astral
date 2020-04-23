@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
 
 public class NameFragment extends Fragment {
+    private EditText txtName;
     private String name="";
     private RegistrationInterface registrationInterface;
     private SharedPreferences mSettings;
@@ -34,7 +36,7 @@ public class NameFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_name, container, false);
-        TextView txtName = view.findViewById(R.id.edt_name);
+        txtName = view.findViewById(R.id.edt_name);
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         registrationInterface = (RegistrationInterface)getActivity();
         if (validate(name)){

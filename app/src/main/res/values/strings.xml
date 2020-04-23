@@ -35,6 +35,9 @@
     <string name="content_compatibility">Выберите свой знак зодиака и знак зодиака Вашего партнера. Узнайте насколько вы совместимы</string>
     <string name="btn_compatibility">Узнать совместимость</string>
     <string name="error_name_empty">Укажите Ваше имя</string>
+    <string name="error_city_empty">Укажите Ваш город</string>
     <string name="error_birthday_empty">Укажите дату рождения</string>
     <string name="error_gender_empty">Выберите свой пол</string>
+    <string name="error_invalid_mail_pass">Неверный email или пароль</string>
+    <string name="error_email_exist">Пользователь с таким email уже существует!</string>
 </resources>
