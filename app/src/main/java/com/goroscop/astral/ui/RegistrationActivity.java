@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -17,11 +18,13 @@ import com.goroscop.astral.ui.fragment.CityFragment;
 import com.goroscop.astral.ui.fragment.GenderFragment;
 import com.goroscop.astral.ui.fragment.MailPassFragment;
 import com.goroscop.astral.ui.fragment.NameFragment;
+import com.goroscop.astral.ui.interfaces.RegistrationInterface;
 
 import java.util.ArrayList;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity implements RegistrationInterface {
     private ViewPager2 countPager, contentPager;
+    private Button btnNext;
     private ArrayList<Integer> count = new ArrayList<>();
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
 
@@ -31,18 +34,12 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
         countPager = findViewById(R.id.count_pager);
         contentPager = findViewById(R.id.content_pager);
-        Button btnNext = findViewById(R.id.btn_next);
+        btnNext = findViewById(R.id.btn_next);
         ImageView back = findViewById(R.id.icon_back);
 
         initAnimationPager();
         initCountPager();
         initContentPager();
-
-
-        btnNext.setOnClickListener(v -> {
-            contentPager.setCurrentItem(contentPager.getCurrentItem()+1);
-            countPager.setCurrentItem(countPager.getCurrentItem()+1);
-        });
 
         back.setOnClickListener(v -> {
             if (countPager.getCurrentItem()>0) {
@@ -96,6 +93,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void initContentPager(){
+        countPager.setOffscreenPageLimit(1);
         contentPager.setUserInputEnabled(false);
         fragmentList.add(new NameFragment());
         fragmentList.add(new BirthdayFragment());
@@ -105,6 +103,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         RegistrationAdapter registrationAdapter = new RegistrationAdapter(getSupportFragmentManager(), getLifecycle(), fragmentList);
         contentPager.setAdapter(registrationAdapter);
+        System.out.println(contentPager.getCurrentItem());
     }
 
     @Override
@@ -118,6 +117,22 @@ public class RegistrationActivity extends AppCompatActivity {
             Intent loginActivity = new Intent(this,LoginActivity.class);
             startActivity(loginActivity);
             finish();
+        }
+    }
+
+    @Override
+    public void onNext(boolean isNext, String error) {
+        if (isNext){
+            btnNext.setOnClickListener(v -> {
+                contentPager.setCurrentItem(contentPager.getCurrentItem()+1);
+                countPager.setCurrentItem(countPager.getCurrentItem()+1);
+                System.out.println(contentPager.getCurrentItem());
+            });
+        }
+        else {
+            btnNext.setOnClickListener(v -> {
+                Toast.makeText(this, error,Toast.LENGTH_LONG).show();
+            });
         }
     }
 }

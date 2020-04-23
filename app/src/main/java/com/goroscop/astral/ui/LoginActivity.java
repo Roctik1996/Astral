@@ -38,7 +38,7 @@ public class LoginActivity extends MvpAppCompatActivity {
         });
 
         txtReg.setOnClickListener(v -> {
-            Intent regActivity = new Intent(this,MainActivity.class);
+            Intent regActivity = new Intent(this,RegistrationActivity.class);
             startActivity(regActivity);
             finish();
         });

@@ -34,4 +34,7 @@
     <string name="nav_planet">Моя планета</string>
     <string name="content_compatibility">Выберите свой знак зодиака и знак зодиака Вашего партнера. Узнайте насколько вы совместимы</string>
     <string name="btn_compatibility">Узнать совместимость</string>
+    <string name="error_name_empty">Укажите Ваше имя</string>
+    <string name="error_birthday_empty">Укажите дату рождения</string>
+    <string name="error_gender_empty">Выберите свой пол</string>
 </resources>

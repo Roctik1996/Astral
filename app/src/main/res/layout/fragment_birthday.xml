@@ -43,7 +43,7 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:hint="@string/hint_birthday"
-        android:inputType="text"
+        android:editable="false"
         android:fontFamily="@font/poppins_regular"
         android:textColorHint="@android:color/white"
         android:textColor="@android:color/white"
