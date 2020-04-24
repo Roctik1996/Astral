@@ -40,5 +40,13 @@ public class PageProviderImpl {
         return mBackendService.getHoroscope(token);
     }
 
+    public Single<String> setDevice(String token,
+                                    String fcmToken,
+                                    String deviceId,
+                                    String typeDevice,
+                                    Integer active) {
+        return mBackendService.setDevice(token, fcmToken, deviceId, typeDevice, active);
+    }
+
 
 }

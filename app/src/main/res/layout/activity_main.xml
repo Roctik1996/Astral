@@ -63,13 +63,12 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <fragment
         android:id="@+id/left_drawer"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:background="@color/colorMenu"/>
+        android:name="com.goroscop.astral.ui.NavigationLayout"/>
 
     <FrameLayout
         android:id="@+id/frame"

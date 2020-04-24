@@ -15,34 +15,46 @@ import java.util.ArrayList;
 
 public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HoroscopeViewHolder> {
 
-    private String [] data;
+    private ArrayList<String> data;
+    private View txt;
 
-    public HoroscopeAdapter(String[]  data) {
+    public HoroscopeAdapter(ArrayList<String> data) {
         this.data = data;
     }
 
     @NonNull
     @Override
     public HoroscopeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_horoscope, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_horoscope, viewGroup, false);
         return new HoroscopeViewHolder(view);
+    }
+
+
+    public View getView(){
+        return txt;
+    }
+    public void setTxt(View txt) {
+        this.txt = txt;
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull HoroscopeViewHolder horoscopeViewHolder, int i) {
-        horoscopeViewHolder.txtHoroscope.setText(""+data[i]);
+        horoscopeViewHolder.txtHoroscope.setText(""+data.get(i));
+        setTxt(horoscopeViewHolder.itemView);
     }
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
+
 
     static class HoroscopeViewHolder extends RecyclerView.ViewHolder {
 

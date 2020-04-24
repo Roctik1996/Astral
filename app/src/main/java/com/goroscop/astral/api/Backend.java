@@ -20,8 +20,7 @@ public interface Backend {
                                @Part("gender") String gender,
                                @Part("city") String city,
                                @Part("email") String email,
-                               @Part("password") String password
-                               );
+                               @Part("password") String password);
 
     @Multipart
     @POST("/api/login")
@@ -34,6 +33,12 @@ public interface Backend {
     @GET("/api/horoscope")
     Single<Horoscope> getHoroscope(@Header("Authorization") String token);
 
-
+    @Multipart
+    @POST("/api/device")
+    Single<String> setDevice(@Header("Authorization") String token,
+                             @Part("fcm_token") String fcmToken,
+                             @Part("device_id") String deviceId,
+                             @Part("type") String typeDevice,
+                             @Part("active") Integer active);
 
 }

@@ -15,9 +15,17 @@ public class Const {
     public static final String APP_PREFERENCES_CITY = "city";
     public static final String APP_PREFERENCES_EMAIL = "email";
     public static final String APP_PREFERENCES_PASS = "pass";
+    public static final String APP_PREFERENCES_IS_FIRST = "is_first";
+
+    public static final String[] tabTitle = new String[]{"Сегодня",
+            "Завтра",
+            "Неделя",
+            "Месяц",
+            "Год",
+    };
 
 
-    private static final HashMap<String, Integer> avatarIcon = new HashMap<>();
+    public static final HashMap<String, Integer> avatarIcon = new HashMap<>();
     static {
         avatarIcon.put("Овен", R.drawable.ic_aries);
         avatarIcon.put("Телец", R.drawable.ic_taurus);
@@ -33,7 +41,7 @@ public class Const {
         avatarIcon.put("Рыбы", R.drawable.ic_pisces);
     }
 
-    private static final HashMap<String, Integer> miniIcon = new HashMap<>();
+    public static final HashMap<String, Integer> miniIcon = new HashMap<>();
     static {
         miniIcon.put("Овен", R.drawable.ic_aries_mini);
         miniIcon.put("Телец", R.drawable.ic_taurus_mini);
@@ -47,6 +55,55 @@ public class Const {
         miniIcon.put("Козерог", R.drawable.ic_capricorn_mini);
         miniIcon.put("Водолей", R.drawable.ic_aquarius_mini);
         miniIcon.put("Рыбы", R.drawable.ic_pisces_mini);
+    }
+
+    public static final HashMap<String, Integer> avatarChinaIcon = new HashMap<>();
+    static {
+        avatarChinaIcon.put("Обезьяна", R.drawable.ic_monkey);
+        avatarChinaIcon.put("Петух", R.drawable.ic_rooster);
+        avatarChinaIcon.put("Собака", R.drawable.ic_dog);
+        avatarChinaIcon.put("Свинья", R.drawable.ic_pig);
+        avatarChinaIcon.put("Крыса", R.drawable.ic_rat);
+        avatarChinaIcon.put("Бык", R.drawable.ic_ox);
+        avatarChinaIcon.put("Тигр", R.drawable.ic_tiger);
+        avatarChinaIcon.put("Кролик", R.drawable.ic_rabbit);
+        avatarChinaIcon.put("Дракон", R.drawable.ic_dragon);
+        avatarChinaIcon.put("Змея", R.drawable.ic_snake);
+        avatarChinaIcon.put("Лошадь", R.drawable.ic_horse);
+        avatarChinaIcon.put("Коза", R.drawable.ic_sheep);
+    }
+
+    public static final HashMap<String, Integer> miniChinaIcon = new HashMap<>();
+    static {
+        miniChinaIcon.put("Обезьяна", R.drawable.ic_monkey_mini);
+        miniChinaIcon.put("Петух", R.drawable.ic_rooster_mini);
+        miniChinaIcon.put("Собака", R.drawable.ic_dog_mini);
+        miniChinaIcon.put("Свинья", R.drawable.ic_pig_mini);
+        miniChinaIcon.put("Крыса", R.drawable.ic_rat_mini);
+        miniChinaIcon.put("Бык", R.drawable.ic_ox_mini);
+        miniChinaIcon.put("Тигр", R.drawable.ic_tiger_mini);
+        miniChinaIcon.put("Кролик", R.drawable.ic_rabbit_mini);
+        miniChinaIcon.put("Дракон", R.drawable.ic_dragon_mini);
+        miniChinaIcon.put("Змея", R.drawable.ic_snake_mini);
+        miniChinaIcon.put("Лошадь", R.drawable.ic_horse_mini);
+        miniChinaIcon.put("Коза", R.drawable.ic_sheep_mini);
+    }
+
+
+    public static final HashMap<String, String> datesSign = new HashMap<>();
+    static {
+        datesSign.put("Овен", "21.03 по 20.04");
+        datesSign.put("Телец", "21.04 по 21.05");
+        datesSign.put("Близнецы", "21.05 по 21.06");
+        datesSign.put("Рак", "22.06 по 22.07");
+        datesSign.put("Лев", "23.07 по 23.08");
+        datesSign.put("Дева", "24.08 по 23.09");
+        datesSign.put("Весы", "24.09 по 23.10");
+        datesSign.put("Скорпион", "24.10 по 22.11");
+        datesSign.put("Стрелец", "23.11 по 21.12");
+        datesSign.put("Козерог", "22.12 по 20.01");
+        datesSign.put("Водолей", "21.01 по 19.02");
+        datesSign.put("Рыбы", "20.02 по 20.03");
     }
 
 }

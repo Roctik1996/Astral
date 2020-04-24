@@ -44,21 +44,20 @@
                     android:id="@+id/txt_name_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/icon_sign"
                     app:layout_constraintStart_toEndOf="@id/view_my"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Roctik" />
+                    />
 
                 <ImageView
                     android:id="@+id/icon_sign"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_scorpion_mini"
+                    android:layout_marginStart="10dp"
                     app:layout_constraintBottom_toTopOf="@+id/icon_china_sign"
                     app:layout_constraintStart_toEndOf="@id/view_my"
                     app:layout_constraintTop_toBottomOf="@+id/txt_name_age" />
@@ -67,7 +66,7 @@
                     android:id="@+id/txt_sign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
@@ -80,7 +79,7 @@
                     android:id="@+id/icon_china_sign"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:src="@drawable/ic_scorpion_mini"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/view_my"
@@ -90,7 +89,7 @@
                     android:id="@+id/txt_china_sign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"
@@ -253,12 +252,11 @@
                     app:tabIndicatorColor="@color/colorTabLine"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/viewpager"
+                <FrameLayout
+                    android:id="@+id/horoscope_frame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_layout"
                     app:layout_constraintTop_toBottomOf="@id/tabLayout"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -268,7 +266,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
                 android:textColor="@android:color/white"
                 android:fontFamily="@font/poppins_bold"
@@ -282,7 +280,7 @@
                 android:layout_height="80dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/bg_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -304,6 +302,32 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:elevation="1dp"
+        android:focusable="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:elevation="1dp"
+            android:visibility="invisible"
+            android:indeterminateTint="@color/colorAppBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </FrameLayout>
 
 
 

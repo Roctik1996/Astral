@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Astral - персональный гороскоп</string>
+
+    <string name="default_notification_channel_id">com.goroscop.astral.chanel</string>
     <string name="astral">Astral</string>
     <string name="personal_horoscop">Персональный гороскоп</string>
     <string name="hint_email">EMAIL</string>
@@ -44,4 +46,6 @@
     <string name="txt_career">Карьера</string>
     <string name="txt_health">Здоровье</string>
     <string name="lucky_num">Счастливые номера</string>
+    <string name="txt_pay">Купить</string>
+    <string name="cancel">Отмена</string>
 </resources>

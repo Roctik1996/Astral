@@ -84,7 +84,7 @@ public class BirthdayFragment extends Fragment implements DatePickerDialog.OnDat
         txtBirthday.setText(formatter.format(date));
         if (validate(date)) {
             SharedPreferences.Editor editor = mSettings.edit();
-            editor.putLong(APP_PREFERENCES_BIRTHDAY, date.getTime() / 1000);
+            editor.putString(APP_PREFERENCES_BIRTHDAY, String.valueOf(date.getTime() / 1000));
             editor.apply();
             registrationInterface.onNext(true, "");
         }
