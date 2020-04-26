@@ -17,6 +17,7 @@ public class Const {
     public static final String APP_PREFERENCES_PASS = "pass";
     public static final String APP_PREFERENCES_IS_FIRST = "is_first";
     public static final String APP_PREFERENCES_PLANET = "planet";
+    public static final String APP_PREFERENCES_PRO = "pro";
 
     public static final String[] tabTitle = new String[]{"Сегодня",
             "Завтра",
