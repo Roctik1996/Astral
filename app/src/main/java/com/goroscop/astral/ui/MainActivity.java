@@ -23,6 +23,7 @@ import com.goroscop.astral.R;
 import com.goroscop.astral.model.User;
 import com.goroscop.astral.presenter.DevicePresenter;
 import com.goroscop.astral.presenter.UserPresenter;
+import com.goroscop.astral.ui.fragment.ElementFragment;
 import com.goroscop.astral.ui.fragment.HomeFragment;
 import com.goroscop.astral.ui.fragment.MetalFragment;
 import com.goroscop.astral.ui.fragment.PlanetFragment;
@@ -155,7 +156,8 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
 
     @Override
     public void onElementPressed() {
-
+        loadFragment(new ElementFragment());
+        drawerLayout.closeDrawers();
     }
 
     @Override

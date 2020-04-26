@@ -123,4 +123,52 @@ public class Const {
         planetUrls.put("Рыбы", "http://ru.astrologyk.com/zodiac/planets/pisces");
     }
 
+    public static final HashMap<String, Integer> elements = new HashMap<>();
+    static {
+        elements.put("Овен", R.string.aries);
+        elements.put("Телец", R.string.taurus);
+        elements.put("Близнецы", R.string.gemini);
+        elements.put("Рак", R.string.cancer);
+        elements.put("Лев", R.string.leo);
+        elements.put("Дева", R.string.virgo);
+        elements.put("Весы", R.string.libra);
+        elements.put("Скорпион", R.string.scorpion);
+        elements.put("Стрелец", R.string.sagittarius);
+        elements.put("Козерог", R.string.capricorn);
+        elements.put("Водолей", R.string.aquarius);
+        elements.put("Рыбы", R.string.pisces);
+    }
+
+    public static final HashMap<String, Integer> elementsCompatibility = new HashMap<>();
+    static {
+        elementsCompatibility.put("Овен", R.string.fire);
+        elementsCompatibility.put("Телец", R.string.earth);
+        elementsCompatibility.put("Близнецы", R.string.air);
+        elementsCompatibility.put("Рак", R.string.water);
+        elementsCompatibility.put("Лев", R.string.fire);
+        elementsCompatibility.put("Дева", R.string.earth);
+        elementsCompatibility.put("Весы", R.string.air);
+        elementsCompatibility.put("Скорпион", R.string.water);
+        elementsCompatibility.put("Стрелец", R.string.fire);
+        elementsCompatibility.put("Козерог", R.string.earth);
+        elementsCompatibility.put("Водолей", R.string.air);
+        elementsCompatibility.put("Рыбы", R.string.water);
+    }
+
+    public static final HashMap<String, Integer> elementsIcon = new HashMap<>();
+    static {
+        elementsIcon.put("Овен", R.drawable.ic_fire);
+        elementsIcon.put("Телец", R.drawable.ic_earth);
+        elementsIcon.put("Близнецы", R.drawable.ic_air);
+        elementsIcon.put("Рак", R.drawable.ic_water);
+        elementsIcon.put("Лев", R.drawable.ic_fire);
+        elementsIcon.put("Дева", R.drawable.ic_earth);
+        elementsIcon.put("Весы", R.drawable.ic_air);
+        elementsIcon.put("Скорпион", R.drawable.ic_water);
+        elementsIcon.put("Стрелец", R.drawable.ic_fire);
+        elementsIcon.put("Козерог", R.drawable.ic_earth);
+        elementsIcon.put("Водолей", R.drawable.ic_air);
+        elementsIcon.put("Рыбы", R.drawable.ic_water);
+    }
+
 }
