@@ -18,6 +18,8 @@ public class Const {
     public static final String APP_PREFERENCES_IS_FIRST = "is_first";
     public static final String APP_PREFERENCES_PLANET = "planet";
     public static final String APP_PREFERENCES_PRO = "pro";
+    public static final String APP_PREFERENCES_CHINA = "china";
+    public static final String APP_PREFERENCES_SUCCESS = "success";
 
     public static final String[] tabTitle = new String[]{"Сегодня",
             "Завтра",
@@ -73,6 +75,22 @@ public class Const {
         avatarChinaIcon.put("Змея", R.drawable.ic_snake);
         avatarChinaIcon.put("Лошадь", R.drawable.ic_horse);
         avatarChinaIcon.put("Коза", R.drawable.ic_sheep);
+    }
+
+    public static final HashMap<String, Integer> chinaAll = new HashMap<>();
+    static {
+        chinaAll.put("Обезьяна", R.string.monkey);
+        chinaAll.put("Петух", R.string.rooster);
+        chinaAll.put("Собака", R.string.dog);
+        chinaAll.put("Свинья", R.string.pig);
+        chinaAll.put("Крыса", R.string.rat);
+        chinaAll.put("Бык", R.string.ox);
+        chinaAll.put("Тигр", R.string.tiger);
+        chinaAll.put("Кролик", R.string.rabbit);
+        chinaAll.put("Дракон", R.string.dragon);
+        chinaAll.put("Змея", R.string.snake);
+        chinaAll.put("Лошадь", R.string.horse);
+        chinaAll.put("Коза", R.string.sheep);
     }
 
     public static final HashMap<String, Integer> miniChinaIcon = new HashMap<>();

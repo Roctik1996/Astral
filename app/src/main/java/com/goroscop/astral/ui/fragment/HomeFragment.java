@@ -20,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,7 +42,10 @@ import hiennguyen.me.circleseekbar.CircleSeekBar;
 
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_CHINA;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PLANET;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_SUCCESS;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
 import static com.goroscop.astral.utils.Const.avatarIcon;
 import static com.goroscop.astral.utils.Const.datesSign;
@@ -56,9 +58,6 @@ import static com.goroscop.astral.utils.Utils.getSign;
 
 public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope {
 
-    //private ViewPager2 horoscopePager;
-    //private TabLayoutMediator tabLayoutMediator;
-    private FrameLayout horoscopeFrame;
     private TabLayout tabLayout;
     private RecyclerView recyclerLucky;
     private ArrayList<Integer> count = new ArrayList<>();
@@ -83,8 +82,6 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         tabLayout = view.findViewById(R.id.tabLayout);
         recyclerLucky = view.findViewById(R.id.recycler_num);
-
-        horoscopeFrame = view.findViewById(R.id.horoscope_frame);
 
         progressBar = view.findViewById(R.id.progress);
         frame = view.findViewById(R.id.frame);
@@ -184,6 +181,11 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
             recyclerLucky.setLayoutManager(layoutManager);
             count.addAll(horoscope.getToday().getLuckNumbers());
             recyclerLucky.setAdapter(new LuckyNumAdapter(count));
+
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putString(APP_PREFERENCES_CHINA, horoscope.getChina().getInfo());
+            editor.putInt(APP_PREFERENCES_SUCCESS, horoscope.getChina().getSuccessDay());
+            editor.apply();
         }
     }
 
@@ -199,7 +201,7 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
     }
 
-    private void initTabHoroscope(){
+    private void initTabHoroscope() {
         TabLayout.Tab today = tabLayout.newTab();
         today.setText(tabTitle[0]);
         tabLayout.addTab(today);

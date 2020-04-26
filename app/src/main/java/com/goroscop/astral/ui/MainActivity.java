@@ -2,7 +2,6 @@ package com.goroscop.astral.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -26,6 +25,7 @@ import com.goroscop.astral.R;
 import com.goroscop.astral.model.User;
 import com.goroscop.astral.presenter.DevicePresenter;
 import com.goroscop.astral.presenter.UserPresenter;
+import com.goroscop.astral.ui.fragment.ChinaFragment;
 import com.goroscop.astral.ui.fragment.ElementFragment;
 import com.goroscop.astral.ui.fragment.HomeFragment;
 import com.goroscop.astral.ui.fragment.MetalFragment;
@@ -136,7 +136,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         TextView txtInfo = dialogView.findViewById(R.id.txt_alert);
         TextView txtCancel = dialogView.findViewById(R.id.txt_cancel);
         TextView btnPay = dialogView.findViewById(R.id.btn_pay);
-        txtInfo.setText("Для приобретения раздела “"+page+"”, перейдите на страницу оплаты");
+        txtInfo.setText("Для приобретения раздела “" + page + "”, перейдите на страницу оплаты");
 
         AlertDialog dialog = builder.create();
         dialog.setCancelable(false);
@@ -187,10 +187,10 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
     @Override
     public void onHomePressed() {
         drawerLayout.closeDrawers();
-        if (mSettings.getBoolean(APP_PREFERENCES_PRO,false)) {
+        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
             title.setText(R.string.personal_horoscop);
             loadFragment(new HomeFragment());
-        }else {
+        } else {
             loadFragment(new HomeFragment());
             title.setText("");
             proIcon.setVisibility(View.VISIBLE);
@@ -204,16 +204,19 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
 
     @Override
     public void onChinaPressed() {
-
+        drawerLayout.closeDrawers();
+        loadFragment(new ChinaFragment());
+        title.setText(getString(R.string.nav_china));
+        proIcon.setVisibility(View.GONE);
     }
 
     @Override
     public void onElementPressed() {
         drawerLayout.closeDrawers();
-        if (mSettings.getBoolean(APP_PREFERENCES_PRO,false)) {
+        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
             title.setText(R.string.nav_element);
             loadFragment(new ElementFragment());
-        }else {
+        } else {
             showDialog(getString(R.string.nav_element));
         }
     }
@@ -221,10 +224,10 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
     @Override
     public void onMetalPressed() {
         drawerLayout.closeDrawers();
-        if (mSettings.getBoolean(APP_PREFERENCES_PRO,false)) {
+        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
             title.setText(R.string.nav_metal);
             loadFragment(new MetalFragment());
-        }else {
+        } else {
             showDialog(getString(R.string.nav_metal));
         }
     }
@@ -232,10 +235,10 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
     @Override
     public void onPlanetPressed() {
         drawerLayout.closeDrawers();
-        if (mSettings.getBoolean(APP_PREFERENCES_PRO,false)) {
+        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
             title.setText(R.string.nav_planet);
             loadFragment(new PlanetFragment());
-        }else {
+        } else {
             showDialog(getString(R.string.nav_planet));
         }
     }
