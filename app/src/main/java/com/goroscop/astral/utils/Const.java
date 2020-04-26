@@ -16,6 +16,7 @@ public class Const {
     public static final String APP_PREFERENCES_EMAIL = "email";
     public static final String APP_PREFERENCES_PASS = "pass";
     public static final String APP_PREFERENCES_IS_FIRST = "is_first";
+    public static final String APP_PREFERENCES_PLANET = "planet";
 
     public static final String[] tabTitle = new String[]{"Сегодня",
             "Завтра",
@@ -104,6 +105,22 @@ public class Const {
         datesSign.put("Козерог", "22.12 по 20.01");
         datesSign.put("Водолей", "21.01 по 19.02");
         datesSign.put("Рыбы", "20.02 по 20.03");
+    }
+
+    public static final HashMap<String, String> planetUrls = new HashMap<>();
+    static {
+        planetUrls.put("Овен", "http://ru.astrologyk.com/zodiac/planets/aries");
+        planetUrls.put("Телец", "http://ru.astrologyk.com/zodiac/planets/taurus");
+        planetUrls.put("Близнецы", "http://ru.astrologyk.com/zodiac/planets/gemini");
+        planetUrls.put("Рак", "http://ru.astrologyk.com/zodiac/planets/cancer");
+        planetUrls.put("Лев", "http://ru.astrologyk.com/zodiac/planets/leo");
+        planetUrls.put("Дева", "http://ru.astrologyk.com/zodiac/planets/virgo");
+        planetUrls.put("Весы", "http://ru.astrologyk.com/zodiac/planets/libra");
+        planetUrls.put("Скорпион", "http://ru.astrologyk.com/zodiac/planets/scorpio");
+        planetUrls.put("Стрелец", "http://ru.astrologyk.com/zodiac/planets/sagittarius");
+        planetUrls.put("Козерог", "http://ru.astrologyk.com/zodiac/planets/capricorn");
+        planetUrls.put("Водолей", "http://ru.astrologyk.com/zodiac/planets/aquarius");
+        planetUrls.put("Рыбы", "http://ru.astrologyk.com/zodiac/planets/pisces");
     }
 
 }
