@@ -24,6 +24,7 @@ import com.goroscop.astral.model.User;
 import com.goroscop.astral.presenter.DevicePresenter;
 import com.goroscop.astral.presenter.UserPresenter;
 import com.goroscop.astral.ui.fragment.HomeFragment;
+import com.goroscop.astral.ui.fragment.MetalFragment;
 import com.goroscop.astral.ui.interfaces.NavigationInterface;
 import com.goroscop.astral.view.ViewGetUser;
 import com.goroscop.astral.view.ViewSetDevice;
@@ -139,7 +140,6 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
 
     @Override
     public void onHomePressed() {
-        System.out.println(123);
     }
 
     @Override
@@ -159,7 +159,8 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
 
     @Override
     public void onMetalPressed() {
-
+        loadFragment(new MetalFragment());
+        drawerLayout.closeDrawers();
     }
 
     @Override

@@ -73,7 +73,6 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_scorpion_mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/view_my"
             app:layout_constraintTop_toBottomOf="@+id/icon_sign" />
@@ -92,7 +91,20 @@
             tools:text="Roctik" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
+    <TextView
+        android:id="@+id/txt_metal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:padding="10dp"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:fontFamily="@font/poppins_regular"
+        android:background="@drawable/bg_layout"
+        app:layout_constraintTop_toBottomOf="@id/personal_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

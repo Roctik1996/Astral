@@ -21,15 +21,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.goroscop.astral.R;
+import com.goroscop.astral.utils.MetalConst;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
-import static com.goroscop.astral.utils.Const.avatarIcon;
 import static com.goroscop.astral.utils.Const.datesSign;
 import static com.goroscop.astral.utils.Const.miniChinaIcon;
 import static com.goroscop.astral.utils.Const.miniIcon;
@@ -39,8 +38,8 @@ import static com.goroscop.astral.utils.Utils.getSign;
 
 public class MetalFragment extends Fragment {
 
-    private ImageView avatar, iconSign, iconChinaSign;
-    private TextView txtNameAge, txtSign, txtChinaSign, txtToday;
+    private ImageView iconSign, iconChinaSign;
+    private TextView txtNameAge, txtSign, txtChinaSign,txtMetal;
 
     private SharedPreferences mSettings;
 
@@ -52,13 +51,12 @@ public class MetalFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_metal, container, false);
-        avatar = view.findViewById(R.id.my_sign);
         txtNameAge = view.findViewById(R.id.txt_name_age);
         iconSign = view.findViewById(R.id.icon_sign);
         iconChinaSign = view.findViewById(R.id.icon_china_sign);
         txtSign = view.findViewById(R.id.txt_sign);
         txtChinaSign = view.findViewById(R.id.txt_china_sign);
-        txtToday = view.findViewById(R.id.txt_today);
+        txtMetal = view.findViewById(R.id.txt_metal);
 
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -71,15 +69,13 @@ public class MetalFragment extends Fragment {
     private void initPersonalInfo() {
         txtNameAge.setText(mSettings.getString(APP_PREFERENCES_NAME, "") + ", " +
                 getAge(mSettings.getString(APP_PREFERENCES_BIRTHDAY, "")));
-
-        avatar.setImageResource(avatarIcon.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
         iconSign.setImageResource(miniIcon.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
         iconChinaSign.setImageResource(miniChinaIcon.get(getChinaSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
 
+        txtMetal.setText(MetalConst.metalData.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
+
         getDifferentTextForSign();
         getDifferentTextForChinaSign();
-        getDifferentTextForToday();
-
 
     }
 
@@ -102,19 +98,6 @@ public class MetalFragment extends Fragment {
         Spannable wordTwo = new SpannableString(" (" + birthday.get(Calendar.YEAR) + ")");
         wordTwo.setSpan(new ForegroundColorSpan(Color.parseColor("#80FFFFFF")), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         txtChinaSign.append(wordTwo);
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private void getDifferentTextForToday() {
-        Calendar now = Calendar.getInstance();
-        Spannable word = new SpannableString("Сегодня");
-        word.setSpan(new ForegroundColorSpan(Color.WHITE), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        txtToday.setText(word);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        String dateString = formatter.format(new Date(now.getTime().getTime()));
-        Spannable wordTwo = new SpannableString(" (" + dateString + ")");
-        wordTwo.setSpan(new ForegroundColorSpan(Color.parseColor("#80FFFFFF")), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        txtToday.append(wordTwo);
     }
 
 
