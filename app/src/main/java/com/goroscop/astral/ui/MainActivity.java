@@ -39,6 +39,7 @@ import com.goroscop.astral.ui.fragment.tabs.ElementFragment;
 import com.goroscop.astral.ui.fragment.tabs.HomeFragment;
 import com.goroscop.astral.ui.fragment.tabs.MetalFragment;
 import com.goroscop.astral.ui.fragment.tabs.PlanetFragment;
+import com.goroscop.astral.ui.interfaces.BackToHomeInterface;
 import com.goroscop.astral.ui.interfaces.NavigationInterface;
 import com.goroscop.astral.view.ViewGetUser;
 import com.goroscop.astral.view.ViewSetDevice;
@@ -56,7 +57,7 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PRO;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
 
-public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, ViewSetDevice, NavigationInterface {
+public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, ViewSetDevice, NavigationInterface, BackToHomeInterface {
     private DrawerLayout drawerLayout;
     private SharedPreferences mSettings;
     private ProgressBar progressBar;
@@ -343,6 +344,24 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
                 loadFragment(new PlanetFragment());
             } else {
                 showDialog(getString(R.string.nav_planet));
+            }
+        }
+    }
+
+    @Override
+    public void onBack(boolean isHome) {
+        if (isHome) {
+            if (mSettings.contains(APP_PREFERENCES_PRO)) {
+                if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+                    title.setText(R.string.personal_horoscop);
+                    proIcon.setVisibility(View.GONE);
+                } else {
+                    title.setText("");
+                    proIcon.setVisibility(View.VISIBLE);
+                }
+            } else {
+                title.setText("");
+                proIcon.setVisibility(View.VISIBLE);
             }
         }
     }

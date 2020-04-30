@@ -35,6 +35,7 @@ import com.goroscop.astral.model.Horoscope;
 import com.goroscop.astral.presenter.HoroscopePresenter;
 import com.goroscop.astral.ui.adapter.LuckyNumAdapter;
 import com.goroscop.astral.ui.fragment.HoroscopeFragment;
+import com.goroscop.astral.ui.interfaces.BackToHomeInterface;
 import com.goroscop.astral.ui.interfaces.NavigationInterface;
 import com.goroscop.astral.utils.MetalConst;
 import com.goroscop.astral.view.ViewHoroscope;
@@ -97,7 +98,6 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
     private TextView txtNameAge, txtSign, txtChinaSign, txtToday, txtChinaPro, txtChinaSuccess, txtMetal, txtElement, txtPlanet;
     private CircleSeekBar love, health, career;
     private ConstraintLayout contentPro;
-    private LinearLayout detailChina,detailMetal,detailElement,detailPlanet;
 
     private SharedPreferences mSettings;
 
@@ -139,12 +139,15 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         txtMetal = view.findViewById(R.id.txt_metal);
         txtElement = view.findViewById(R.id.txt_element);
         txtPlanet = view.findViewById(R.id.txt_planet);
-        detailChina = view.findViewById(R.id.detail_china);
-        detailElement = view.findViewById(R.id.detail_element);
-        detailMetal = view.findViewById(R.id.detail_metal);
-        detailPlanet = view.findViewById(R.id.detail_planet);
+        LinearLayout detailChina = view.findViewById(R.id.detail_china);
+        LinearLayout detailElement = view.findViewById(R.id.detail_element);
+        LinearLayout detailMetal = view.findViewById(R.id.detail_metal);
+        LinearLayout detailPlanet = view.findViewById(R.id.detail_planet);
 
         NavigationInterface navigationInterface = (NavigationInterface) getActivity();
+
+        BackToHomeInterface backToHomeInterface = (BackToHomeInterface) getActivity();
+        backToHomeInterface.onBack(true);
 
         detailChina.setOnClickListener(v -> navigationInterface.onChinaPressed());
         detailElement.setOnClickListener(v -> navigationInterface.onElementPressed());
