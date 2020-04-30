@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -26,13 +27,13 @@ import com.goroscop.astral.R;
 import com.goroscop.astral.model.User;
 import com.goroscop.astral.presenter.DevicePresenter;
 import com.goroscop.astral.presenter.UserPresenter;
+import com.goroscop.astral.ui.fragment.DrawerFragment;
 import com.goroscop.astral.ui.fragment.tabs.ChinaFragment;
 import com.goroscop.astral.ui.fragment.tabs.CompatibilityFragment;
 import com.goroscop.astral.ui.fragment.tabs.ElementFragment;
 import com.goroscop.astral.ui.fragment.tabs.HomeFragment;
 import com.goroscop.astral.ui.fragment.tabs.MetalFragment;
 import com.goroscop.astral.ui.fragment.tabs.PlanetFragment;
-import com.goroscop.astral.ui.interfaces.BackToHomeInterface;
 import com.goroscop.astral.ui.interfaces.NavigationInterface;
 import com.goroscop.astral.view.ViewGetUser;
 import com.goroscop.astral.view.ViewSetDevice;
@@ -46,14 +47,15 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PRO;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
 
-public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, ViewSetDevice, NavigationInterface, BackToHomeInterface {
+public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, ViewSetDevice, NavigationInterface {
     private DrawerLayout drawerLayout;
     private SharedPreferences mSettings;
     private ProgressBar progressBar;
     private FrameLayout frame;
     private TextView title;
     private ImageView proIcon;
-    private Boolean isHome;
+    private Fragment currentFragment;
+    private final String TAG = MainActivity.class.getSimpleName();
 
     @InjectPresenter
     UserPresenter userPresenter;
@@ -98,7 +100,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
 
     }
 
-    private void initMainTitle(){
+    private void initMainTitle() {
         if (mSettings.contains(APP_PREFERENCES_PRO)) {
             if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
                 title.setText(R.string.personal_horoscop);
@@ -133,12 +135,8 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
 
     private void loadMenu() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        if (mSettings.contains(APP_PREFERENCES_PRO)) {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
-                ft.replace(R.id.frame_menu, new DrawerFragment(this,mSettings.getBoolean(APP_PREFERENCES_PRO, false)));
-                ft.commit();
-            }
-        }
+        ft.replace(R.id.frame_menu, new DrawerFragment(this, mSettings.getBoolean(APP_PREFERENCES_PRO, false)));
+        ft.commit();
     }
 
     @SuppressLint("SetTextI18n")
@@ -202,81 +200,97 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
     @Override
     public void onHomePressed() {
         drawerLayout.closeDrawers();
-        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
-            title.setText(R.string.personal_horoscop);
-            loadFragment(new HomeFragment());
+        currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        if (currentFragment instanceof HomeFragment) {
+            Log.d(TAG, "Fragment is opened now");
         } else {
-            loadFragment(new HomeFragment());
-            title.setText("");
-            proIcon.setVisibility(View.VISIBLE);
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+                title.setText(R.string.personal_horoscop);
+                loadFragment(new HomeFragment());
+            } else {
+                loadFragment(new HomeFragment());
+                title.setText("");
+                proIcon.setVisibility(View.VISIBLE);
+            }
         }
-
     }
 
     @Override
     public void onCompatibilityPressed() {
         drawerLayout.closeDrawers();
-        loadFragment(new CompatibilityFragment());
-        title.setText(getString(R.string.nav_compatibility));
-        proIcon.setVisibility(View.GONE);
+        currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+
+        if (currentFragment instanceof CompatibilityFragment) {
+            Log.d(TAG, "Fragment is opened now");
+        } else {
+            loadFragment(new CompatibilityFragment());
+            title.setText(getString(R.string.nav_compatibility));
+            proIcon.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
     public void onChinaPressed() {
         drawerLayout.closeDrawers();
-        loadFragment(new ChinaFragment());
-        title.setText(getString(R.string.nav_china));
-        proIcon.setVisibility(View.GONE);
+        currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+
+        if (currentFragment instanceof ChinaFragment) {
+            Log.d(TAG, "Fragment is opened now");
+        } else {
+            loadFragment(new ChinaFragment());
+            title.setText(getString(R.string.nav_china));
+            proIcon.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onElementPressed() {
         drawerLayout.closeDrawers();
-        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
-            title.setText(R.string.nav_element);
-            loadFragment(new ElementFragment());
+        currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+
+        if (currentFragment instanceof ElementFragment) {
+            Log.d(TAG, "Fragment is opened now");
         } else {
-            showDialog(getString(R.string.nav_element));
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+                title.setText(R.string.nav_element);
+                loadFragment(new ElementFragment());
+            } else {
+                showDialog(getString(R.string.nav_element));
+            }
         }
     }
 
     @Override
     public void onMetalPressed() {
         drawerLayout.closeDrawers();
-        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
-            title.setText(R.string.nav_metal);
-            loadFragment(new MetalFragment());
+        currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+
+        if (currentFragment instanceof MetalFragment) {
+            Log.d(TAG, "Fragment is opened now");
         } else {
-            showDialog(getString(R.string.nav_metal));
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+                title.setText(R.string.nav_metal);
+                loadFragment(new MetalFragment());
+            } else {
+                showDialog(getString(R.string.nav_metal));
+            }
         }
     }
 
     @Override
     public void onPlanetPressed() {
         drawerLayout.closeDrawers();
-        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
-            title.setText(R.string.nav_planet);
-            loadFragment(new PlanetFragment());
-        } else {
-            showDialog(getString(R.string.nav_planet));
-        }
-    }
+        currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
 
-    @Override
-    public void onBack(boolean isHome) {
-        this.isHome = isHome;
-        if (isHome) {
-            if (mSettings.contains(APP_PREFERENCES_PRO)) {
-                if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
-                    title.setText(R.string.personal_horoscop);
-                    proIcon.setVisibility(View.GONE);
-                } else {
-                    title.setText("");
-                    proIcon.setVisibility(View.VISIBLE);
-                }
+        if (currentFragment instanceof PlanetFragment) {
+            Log.d(TAG, "Fragment is opened now");
+        } else {
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+                title.setText(R.string.nav_planet);
+                loadFragment(new PlanetFragment());
             } else {
-                title.setText("");
-                proIcon.setVisibility(View.VISIBLE);
+                showDialog(getString(R.string.nav_planet));
             }
         }
     }

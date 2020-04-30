@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,16 +23,16 @@ import java.util.regex.Pattern;
 
 import static android.text.TextUtils.isEmpty;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
-import static com.goroscop.astral.utils.Const.APP_PREFERENCES_CITY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_EMAIL;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PASS;
 
 public class MailPassFragment extends Fragment {
-    private EditText edtMail,edtPass;
-    private String mail="";
-    private String pass="";
+    private EditText edtMail, edtPass;
+    private String mail = "";
+    private String pass = "";
     private RegistrationInterface registrationInterface;
     private SharedPreferences mSettings;
+
     public MailPassFragment() {
     }
 
@@ -42,7 +40,7 @@ public class MailPassFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (validate(mail,pass)){
+        if (validate(mail, pass)) {
             registrationInterface.onNext(true, "");
         }
     }
@@ -55,7 +53,7 @@ public class MailPassFragment extends Fragment {
         edtPass = view.findViewById(R.id.edt_pass);
 
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        registrationInterface = (RegistrationInterface)getActivity();
+        registrationInterface = (RegistrationInterface) getActivity();
 
         edtMail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -64,12 +62,12 @@ public class MailPassFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mail= String.valueOf(s);
-                if (validate(mail,pass)){
+                mail = String.valueOf(s);
+                if (validate(mail, pass)) {
                     SharedPreferences.Editor editor = mSettings.edit();
                     editor.putString(APP_PREFERENCES_EMAIL, mail);
                     editor.apply();
-                    registrationInterface.onNext(true,"next");
+                    registrationInterface.onNext(true, "next");
                 }
             }
 
@@ -86,12 +84,12 @@ public class MailPassFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                pass= String.valueOf(s);
-                if (validate(mail,pass)){
+                pass = String.valueOf(s);
+                if (validate(mail, pass)) {
                     SharedPreferences.Editor editor = mSettings.edit();
                     editor.putString(APP_PREFERENCES_PASS, pass);
                     editor.apply();
-                    registrationInterface.onNext(true,"completed");
+                    registrationInterface.onNext(true, "completed");
                 }
             }
 

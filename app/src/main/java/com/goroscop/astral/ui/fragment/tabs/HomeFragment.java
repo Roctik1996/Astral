@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,9 +34,15 @@ import com.goroscop.astral.model.Horoscope;
 import com.goroscop.astral.presenter.HoroscopePresenter;
 import com.goroscop.astral.ui.adapter.LuckyNumAdapter;
 import com.goroscop.astral.ui.fragment.HoroscopeFragment;
-import com.goroscop.astral.ui.interfaces.BackToHomeInterface;
+import com.goroscop.astral.utils.MetalConst;
 import com.goroscop.astral.view.ViewHoroscope;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,12 +54,17 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_CHINA;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PLANET;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PRO;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_SUCCESS;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
 import static com.goroscop.astral.utils.Const.avatarIcon;
 import static com.goroscop.astral.utils.Const.datesSign;
+import static com.goroscop.astral.utils.Const.elements;
+import static com.goroscop.astral.utils.Const.elementsIcon;
 import static com.goroscop.astral.utils.Const.miniChinaIcon;
 import static com.goroscop.astral.utils.Const.miniIcon;
+import static com.goroscop.astral.utils.Const.planetUrls;
 import static com.goroscop.astral.utils.Const.tabTitle;
 import static com.goroscop.astral.utils.Utils.getAge;
 import static com.goroscop.astral.utils.Utils.getChinaSign;
@@ -63,11 +76,12 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
     private RecyclerView recyclerLucky;
     private ArrayList<Integer> count = new ArrayList<>();
     private ArrayList<String> horoscopeData = new ArrayList<>();
-    private ProgressBar progressBar;
+    private ProgressBar progressBar,progressSuccess;
     private FrameLayout frame;
-    private ImageView avatar, iconSign, iconChinaSign;
-    private TextView txtNameAge, txtSign, txtChinaSign, txtToday;
+    private ImageView avatar, iconSign, iconChinaSign,iconChinaPro,iconElementPro;
+    private TextView txtNameAge, txtSign, txtChinaSign, txtToday,txtChinaPro,txtChinaSuccess,txtMetal,txtElement,txtPlanet;
     private CircleSeekBar love, health, career;
+    private ConstraintLayout contentPro;
 
     private SharedPreferences mSettings;
 
@@ -99,8 +113,16 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         health = view.findViewById(R.id.circular_health);
         career = view.findViewById(R.id.circular_career);
 
-        BackToHomeInterface backToHomeInterface = (BackToHomeInterface) getActivity();
-        backToHomeInterface.onBack(true);
+        //init pro components
+        iconChinaPro = view.findViewById(R.id.icon_china_sign_pro);
+        iconElementPro = view.findViewById(R.id.icon_element_sign_pro);
+        contentPro = view.findViewById(R.id.content_pro);
+        txtChinaPro = view.findViewById(R.id.txt_china);
+        txtChinaSuccess = view.findViewById(R.id.txt_success_progress);
+        progressSuccess = view.findViewById(R.id.progressBar);
+        txtMetal = view.findViewById(R.id.txt_metal);
+        txtElement = view.findViewById(R.id.txt_element);
+        txtPlanet = view.findViewById(R.id.txt_planet);
 
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -116,6 +138,19 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
     }
 
     @SuppressLint("SetTextI18n")
+    private void initProContent(){
+        iconChinaPro.setImageResource(miniChinaIcon.get(getChinaSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
+        iconElementPro.setImageResource(elementsIcon.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
+
+        txtChinaPro.setText(mSettings.getString(APP_PREFERENCES_CHINA, ""));
+        progressSuccess.setProgress(mSettings.getInt(APP_PREFERENCES_SUCCESS, 0));
+        txtChinaSuccess.setText(mSettings.getInt(APP_PREFERENCES_SUCCESS, 0) + "%");
+        txtMetal.setText(MetalConst.metalData.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
+        txtElement.setText(elements.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
+        initPlanet();
+    }
+
+    @SuppressLint("SetTextI18n")
     private void initPersonalInfo() {
         txtNameAge.setText(mSettings.getString(APP_PREFERENCES_NAME, "") + ", " +
                 getAge(mSettings.getString(APP_PREFERENCES_BIRTHDAY, "")));
@@ -127,8 +162,14 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         getDifferentTextForSign();
         getDifferentTextForChinaSign();
         getDifferentTextForToday();
+    }
 
-
+    private void initPlanet() {
+        if (mSettings.contains(APP_PREFERENCES_PLANET)) {
+            if (!mSettings.getString(APP_PREFERENCES_PLANET, "").equals("")) {
+                txtPlanet.setText(mSettings.getString(APP_PREFERENCES_PLANET, ""));
+            } else new ParseData().execute();
+        } else new ParseData().execute();
     }
 
     private void getDifferentTextForSign() {
@@ -165,6 +206,8 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         txtToday.append(wordTwo);
     }
 
+
+
     @Override
     public void getHoroscope(Horoscope horoscope) {
         if (horoscope != null) {
@@ -192,9 +235,19 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
             editor.putString(APP_PREFERENCES_CHINA, horoscope.getChina().getInfo());
             editor.putInt(APP_PREFERENCES_SUCCESS, horoscope.getChina().getSuccessDay());
             editor.apply();
+
+            if (mSettings.contains(APP_PREFERENCES_PRO)) {
+                if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+                    contentPro.setVisibility(View.VISIBLE);
+                    initProContent();
+                } else {
+                    contentPro.setVisibility(View.GONE);
+                }
+            } else {
+                contentPro.setVisibility(View.GONE);
+            }
         }
     }
-
 
     @Override
     public void showProgress(boolean isLoading) {
@@ -270,5 +323,34 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ft.replace(R.id.horoscope_frame, fragment);
         ft.commit();
+    }
+
+    private class ParseData extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+            StringBuilder result = new StringBuilder();
+            try {
+                Document doc = Jsoup.connect(planetUrls.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, "")))).get();
+                Elements newsHeadlines = doc.select("p");
+                for (Element headline : newsHeadlines) {
+                    result.append(headline).append("\n\n");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String data = result.toString().replaceAll("<p>", "").replaceAll("</p>", "");
+
+            return data.substring(0, data.length() - 2);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putString(APP_PREFERENCES_PLANET, result);
+            editor.apply();
+            txtPlanet.setText(result);
+        }
     }
 }

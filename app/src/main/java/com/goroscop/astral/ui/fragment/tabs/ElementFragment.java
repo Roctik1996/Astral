@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -21,38 +20,29 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.goroscop.astral.R;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
-import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PLANET;
 import static com.goroscop.astral.utils.Const.datesSign;
 import static com.goroscop.astral.utils.Const.elements;
 import static com.goroscop.astral.utils.Const.elementsCompatibility;
 import static com.goroscop.astral.utils.Const.elementsIcon;
 import static com.goroscop.astral.utils.Const.miniChinaIcon;
 import static com.goroscop.astral.utils.Const.miniIcon;
-import static com.goroscop.astral.utils.Const.planetUrls;
 import static com.goroscop.astral.utils.Utils.getAge;
 import static com.goroscop.astral.utils.Utils.getChinaSign;
 import static com.goroscop.astral.utils.Utils.getSign;
 
 public class ElementFragment extends Fragment {
 
-    private ImageView iconSign, iconChinaSign,iconElement;
+    private ImageView iconSign, iconChinaSign, iconElement;
     private TextView txtNameAge, txtSign, txtChinaSign, txtElement, txtElementCompatibility;
     private ProgressBar progressBar;
     private FrameLayout frame;

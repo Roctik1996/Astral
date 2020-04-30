@@ -48,7 +48,7 @@ public class CompatibilityFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
 
-        if(bundle != null){
+        if (bundle != null) {
             data.addAll(Const.datesSign.keySet());
             partnerIcon.setImageResource(avatarIcon.get(data.get(bundle.getInt("partner_sign"))));
         }
@@ -56,14 +56,13 @@ public class CompatibilityFragment extends Fragment {
         partnerIcon.setOnClickListener(v -> loadFragment(new PartnerFragment()));
 
         btnNext.setOnClickListener(v -> {
-            if (data.size()>0){
+            if (data.size() > 0) {
                 bundle.putInt("partner_sign", bundle.getInt("partner_sign"));
                 Fragment fragment = new CompatibilityResultFragment();
                 fragment.setArguments(bundle);
                 loadFragment(fragment);
-            }
-            else {
-                Toast.makeText(getContext(),"Укажите знак партнера",Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getContext(), "Укажите знак партнера", Toast.LENGTH_LONG).show();
             }
         });
 

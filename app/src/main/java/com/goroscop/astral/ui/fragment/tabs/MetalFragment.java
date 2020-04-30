@@ -18,7 +18,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.goroscop.astral.R;
@@ -40,7 +39,7 @@ import static com.goroscop.astral.utils.Utils.getSign;
 public class MetalFragment extends Fragment {
 
     private ImageView iconSign, iconChinaSign;
-    private TextView txtNameAge, txtSign, txtChinaSign,txtMetal;
+    private TextView txtNameAge, txtSign, txtChinaSign, txtMetal;
 
     private SharedPreferences mSettings;
 

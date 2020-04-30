@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -12,26 +11,17 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.goroscop.astral.R;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,7 +32,6 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PLANET;
 import static com.goroscop.astral.utils.Const.datesSign;
 import static com.goroscop.astral.utils.Const.miniChinaIcon;
 import static com.goroscop.astral.utils.Const.miniIcon;
-import static com.goroscop.astral.utils.Const.planetUrls;
 import static com.goroscop.astral.utils.Utils.getAge;
 import static com.goroscop.astral.utils.Utils.getChinaSign;
 import static com.goroscop.astral.utils.Utils.getSign;
@@ -51,8 +40,6 @@ public class PlanetFragment extends Fragment {
 
     private ImageView iconSign, iconChinaSign;
     private TextView txtNameAge, txtSign, txtChinaSign, txtPlanet;
-    private ProgressBar progressBar;
-    private FrameLayout frame;
 
     private SharedPreferences mSettings;
 
@@ -70,13 +57,9 @@ public class PlanetFragment extends Fragment {
         txtChinaSign = view.findViewById(R.id.txt_china_sign);
         txtPlanet = view.findViewById(R.id.txt_planet);
 
-        progressBar = view.findViewById(R.id.progress);
-        frame = view.findViewById(R.id.frame);
-
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         initPersonalInfo();
-        initPlanet();
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -95,7 +78,7 @@ public class PlanetFragment extends Fragment {
                 getAge(mSettings.getString(APP_PREFERENCES_BIRTHDAY, "")));
         iconSign.setImageResource(miniIcon.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
         iconChinaSign.setImageResource(miniChinaIcon.get(getChinaSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
-
+        txtPlanet.setText(mSettings.getString(APP_PREFERENCES_PLANET, ""));
 
         getDifferentTextForSign();
         getDifferentTextForChinaSign();
@@ -121,50 +104,6 @@ public class PlanetFragment extends Fragment {
         Spannable wordTwo = new SpannableString(" (" + birthday.get(Calendar.YEAR) + ")");
         wordTwo.setSpan(new ForegroundColorSpan(Color.parseColor("#80FFFFFF")), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         txtChinaSign.append(wordTwo);
-    }
-
-    private void initPlanet() {
-        if (mSettings.contains(APP_PREFERENCES_PLANET)) {
-            if (!mSettings.getString(APP_PREFERENCES_PLANET, "").equals("")) {
-                txtPlanet.setText(mSettings.getString(APP_PREFERENCES_PLANET, ""));
-            } else new ParseData().execute();
-        } else new ParseData().execute();
-    }
-
-    private class ParseData extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... params) {
-            showProgress(true);
-            StringBuilder result = new StringBuilder();
-            try {
-                Document doc = Jsoup.connect(planetUrls.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, "")))).get();
-                Elements newsHeadlines = doc.select("p");
-                for (Element headline : newsHeadlines) {
-                    result.append(headline).append("\n\n");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String data = result.toString().replaceAll("<p>", "").replaceAll("</p>", "");
-
-            return data.substring(0, data.length() - 2);
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            showProgress(false);
-            SharedPreferences.Editor editor = mSettings.edit();
-            editor.putString(APP_PREFERENCES_PLANET, result);
-            editor.apply();
-            txtPlanet.setText(result);
-        }
-    }
-
-    public void showProgress(boolean isLoading) {
-        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-        frame.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 
     private void loadFragment(Fragment fragment) {

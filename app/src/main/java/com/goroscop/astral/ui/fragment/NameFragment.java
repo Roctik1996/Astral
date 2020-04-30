@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +23,7 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
 
 public class NameFragment extends Fragment {
     private EditText txtName;
-    private String name="";
+    private String name = "";
     private RegistrationInterface registrationInterface;
     private SharedPreferences mSettings;
 
@@ -38,9 +36,9 @@ public class NameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_name, container, false);
         txtName = view.findViewById(R.id.edt_name);
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        registrationInterface = (RegistrationInterface)getActivity();
-        if (validate(name)){
-            registrationInterface.onNext(true,"");
+        registrationInterface = (RegistrationInterface) getActivity();
+        if (validate(name)) {
+            registrationInterface.onNext(true, "");
         }
         txtName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -49,12 +47,12 @@ public class NameFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                name= String.valueOf(s);
-                if (validate(name)){
+                name = String.valueOf(s);
+                if (validate(name)) {
                     SharedPreferences.Editor editor = mSettings.edit();
                     editor.putString(APP_PREFERENCES_NAME, name);
                     editor.apply();
-                    registrationInterface.onNext(true,"");
+                    registrationInterface.onNext(true, "");
                 }
             }
 
@@ -68,7 +66,7 @@ public class NameFragment extends Fragment {
 
     private boolean validate(String name) {
         if (isEmpty(name)) {
-            registrationInterface.onNext(false,getString(R.string.error_name_empty));
+            registrationInterface.onNext(false, getString(R.string.error_name_empty));
             return false;
         }
         return true;

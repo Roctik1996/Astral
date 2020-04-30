@@ -40,5 +40,4 @@ public interface Backend {
                              @Part("device_id") String deviceId,
                              @Part("type") String typeDevice,
                              @Part("active") Integer active);
-
 }

@@ -1,7 +1,8 @@
-package com.goroscop.astral.ui;
+package com.goroscop.astral.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +18,26 @@ import androidx.fragment.app.Fragment;
 import com.goroscop.astral.R;
 import com.goroscop.astral.ui.interfaces.NavigationInterface;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
+import static com.goroscop.astral.utils.Const.avatarIcon;
+import static com.goroscop.astral.utils.Utils.getSign;
+
 @SuppressLint("ViewConstructor")
 public class DrawerFragment extends Fragment {
 
     private NavigationInterface navigationInterface;
     private boolean isPro;
 
-    DrawerFragment(Context context, boolean isPro) {
+    public DrawerFragment(Context context, boolean isPro) {
         navigationInterface = (NavigationInterface) context;
         this.isPro = isPro;
     }
 
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,16 +54,17 @@ public class DrawerFragment extends Fragment {
         ImageView iconProElement = view.findViewById(R.id.pro_element);
         ImageView iconProMetal = view.findViewById(R.id.pro_metal);
         ImageView iconProPlanet = view.findViewById(R.id.pro_planet);
+        ImageView iconSign = view.findViewById(R.id.icon_sign);
+        TextView txtYear = view.findViewById(R.id.nav_china_year);
 
-        if (isPro){
+        if (isPro) {
             txtElement.setAlpha(1f);
             txtMetal.setAlpha(1f);
             txtPlanet.setAlpha(1f);
             iconProElement.setVisibility(View.GONE);
             iconProMetal.setVisibility(View.GONE);
             iconProPlanet.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             txtElement.setAlpha(0.5f);
             txtMetal.setAlpha(0.5f);
             txtPlanet.setAlpha(0.5f);
@@ -62,9 +73,17 @@ public class DrawerFragment extends Fragment {
             iconProPlanet.setVisibility(View.VISIBLE);
         }
 
+        SharedPreferences mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
+        iconSign.setImageResource(avatarIcon.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
+        Date date1 = new Date(Long.parseLong(mSettings.getString(APP_PREFERENCES_BIRTHDAY, "")) * 1000);
+        Calendar birthday = Calendar.getInstance();
+        birthday.setTime(date1);
+        txtYear.setText("(" + birthday.get(Calendar.YEAR) + ")");
 
-        navHome.setOnClickListener(v -> navigationInterface.onHomePressed());
+        navHome.setOnClickListener(v -> {
+            navigationInterface.onHomePressed();
+        });
 
         navCompatibility.setOnClickListener(v -> navigationInterface.onCompatibilityPressed());
 

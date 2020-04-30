@@ -6,7 +6,6 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.goroscop.astral.provider.ProviderModule;
 import com.goroscop.astral.utils.RxUtils;
-import com.goroscop.astral.view.ViewGetToken;
 import com.goroscop.astral.view.ViewGetUser;
 
 import java.util.Objects;

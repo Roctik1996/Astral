@@ -31,6 +31,7 @@ public class Const {
 
 
     public static final Map<String, Integer> avatarIcon = new LinkedHashMap<>();
+
     static {
         avatarIcon.put("Овен", R.drawable.ic_aries);
         avatarIcon.put("Телец", R.drawable.ic_taurus);
@@ -47,6 +48,7 @@ public class Const {
     }
 
     public static final Map<String, Integer> miniIcon = new LinkedHashMap<>();
+
     static {
         miniIcon.put("Овен", R.drawable.ic_aries_mini);
         miniIcon.put("Телец", R.drawable.ic_taurus_mini);
@@ -63,6 +65,7 @@ public class Const {
     }
 
     public static final Map<String, Integer> avatarChinaIcon = new LinkedHashMap<>();
+
     static {
         avatarChinaIcon.put("Обезьяна", R.drawable.ic_monkey);
         avatarChinaIcon.put("Петух", R.drawable.ic_rooster);
@@ -79,6 +82,7 @@ public class Const {
     }
 
     public static final Map<String, Integer> chinaAll = new LinkedHashMap<>();
+
     static {
         chinaAll.put("Обезьяна", R.string.monkey);
         chinaAll.put("Петух", R.string.rooster);
@@ -95,6 +99,7 @@ public class Const {
     }
 
     public static final Map<String, Integer> miniChinaIcon = new LinkedHashMap<>();
+
     static {
         miniChinaIcon.put("Обезьяна", R.drawable.ic_monkey_mini);
         miniChinaIcon.put("Петух", R.drawable.ic_rooster_mini);
@@ -112,6 +117,7 @@ public class Const {
 
 
     public static final Map<String, String> datesSign = new LinkedHashMap<>();
+
     static {
         datesSign.put("Овен", "21.03 по 20.04");
         datesSign.put("Телец", "21.04 по 21.05");
@@ -128,6 +134,7 @@ public class Const {
     }
 
     public static final Map<String, String> planetUrls = new LinkedHashMap<>();
+
     static {
         planetUrls.put("Овен", "http://ru.astrologyk.com/zodiac/planets/aries");
         planetUrls.put("Телец", "http://ru.astrologyk.com/zodiac/planets/taurus");
@@ -144,6 +151,7 @@ public class Const {
     }
 
     public static final Map<String, Integer> elements = new LinkedHashMap<>();
+
     static {
         elements.put("Овен", R.string.aries);
         elements.put("Телец", R.string.taurus);
@@ -160,6 +168,7 @@ public class Const {
     }
 
     public static final Map<String, Integer> elementsCompatibility = new LinkedHashMap<>();
+
     static {
         elementsCompatibility.put("Овен", R.string.fire);
         elementsCompatibility.put("Телец", R.string.earth);
@@ -177,6 +186,7 @@ public class Const {
 
 
     public static final Map<String, Integer> elementsIcon = new LinkedHashMap<>();
+
     static {
         elementsIcon.put("Овен", R.drawable.ic_fire);
         elementsIcon.put("Телец", R.drawable.ic_earth);
@@ -193,6 +203,7 @@ public class Const {
     }
 
     public static final Map<String, String> signEn = new LinkedHashMap<>();
+
     static {
         signEn.put("Овен", "aries");
         signEn.put("Телец", "taurus");

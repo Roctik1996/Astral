@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +20,10 @@ import com.goroscop.astral.ui.interfaces.RegistrationInterface;
 import static android.text.TextUtils.isEmpty;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_CITY;
-import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
 
 public class CityFragment extends Fragment {
 
-    private EditText txtCity;
-    private String city="";
+    private String city = "";
     private RegistrationInterface registrationInterface;
     private SharedPreferences mSettings;
 
@@ -36,7 +33,7 @@ public class CityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (validate(city)){
+        if (validate(city)) {
             registrationInterface.onNext(true, "");
         }
     }
@@ -45,9 +42,9 @@ public class CityFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_city, container, false);
-        txtCity = view.findViewById(R.id.edt_city);
+        EditText txtCity = view.findViewById(R.id.edt_city);
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        registrationInterface = (RegistrationInterface)getActivity();
+        registrationInterface = (RegistrationInterface) getActivity();
 
         txtCity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -56,12 +53,12 @@ public class CityFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                city= String.valueOf(s);
-                if (validate(city)){
+                city = String.valueOf(s);
+                if (validate(city)) {
                     SharedPreferences.Editor editor = mSettings.edit();
                     editor.putString(APP_PREFERENCES_CITY, city);
                     editor.apply();
-                    registrationInterface.onNext(true,"");
+                    registrationInterface.onNext(true, "");
                 }
             }
 
@@ -75,7 +72,7 @@ public class CityFragment extends Fragment {
 
     private boolean validate(String city) {
         if (isEmpty(city)) {
-            registrationInterface.onNext(false,getString(R.string.error_city_empty));
+            registrationInterface.onNext(false, getString(R.string.error_city_empty));
             return false;
         }
         return true;
