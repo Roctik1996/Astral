@@ -1,4 +1,4 @@
-package com.goroscop.astral.ui.fragment;
+package com.goroscop.astral.ui.fragment.tabs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,14 +11,15 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.goroscop.astral.R;
 
@@ -41,7 +42,7 @@ import static com.goroscop.astral.utils.Utils.getSign;
 
 public class ChinaFragment extends Fragment {
     private ImageView avatar, iconSign, iconChinaSign;
-    private TextView txtNameAge, txtSign, txtChinaSign,txtChina,txtChinaAll,txtSuccessProgress;
+    private TextView txtNameAge, txtSign, txtChinaSign, txtChina, txtChinaAll, txtSuccessProgress;
     private ProgressBar progressBar;
 
     private SharedPreferences mSettings;
@@ -67,6 +68,14 @@ public class ChinaFragment extends Fragment {
 
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                loadFragment(new HomeFragment());
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
         initInfo();
 
         return view;
@@ -87,7 +96,7 @@ public class ChinaFragment extends Fragment {
         txtChina.setText(mSettings.getString(APP_PREFERENCES_CHINA, ""));
         txtChinaAll.setText(chinaAll.get(getChinaSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
         progressBar.setProgress(mSettings.getInt(APP_PREFERENCES_SUCCESS, 0));
-        txtSuccessProgress.setText(mSettings.getInt(APP_PREFERENCES_SUCCESS, 0)+"%");
+        txtSuccessProgress.setText(mSettings.getInt(APP_PREFERENCES_SUCCESS, 0) + "%");
     }
 
     private void getDifferentTextForSign() {
@@ -109,5 +118,11 @@ public class ChinaFragment extends Fragment {
         Spannable wordTwo = new SpannableString(" (" + birthday.get(Calendar.YEAR) + ")");
         wordTwo.setSpan(new ForegroundColorSpan(Color.parseColor("#80FFFFFF")), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         txtChinaSign.append(wordTwo);
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
     }
 }

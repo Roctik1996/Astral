@@ -8,13 +8,12 @@ public class Utils {
 
     public static String getSign(String date) {
 
-        Date date1 = new Date(Long.parseLong(date)*1000);
+        Date date1 = new Date(Long.parseLong(date) * 1000);
         Calendar birthday = Calendar.getInstance();
         birthday.setTime(date1);
 
-        int month=birthday.get(Calendar.MONTH)+1;
-        int day=birthday.get(Calendar.DAY_OF_MONTH);
-
+        int month = birthday.get(Calendar.MONTH) + 1;
+        int day = birthday.get(Calendar.DAY_OF_MONTH);
 
         String sign = "";
 
@@ -84,49 +83,60 @@ public class Utils {
         return sign;
     }
 
-    public static String getChinaSign(String date){
+    public static String getChinaSign(String date) {
 
-        Date date1 = new Date(Long.parseLong(date)*1000);
+        Date date1 = new Date(Long.parseLong(date) * 1000);
         Calendar birthday = Calendar.getInstance();
         birthday.setTime(date1);
 
-        int year =birthday.get(Calendar.YEAR);
+        int year = birthday.get(Calendar.YEAR);
 
         int remainder = year % 12;
-        String animal="";
+        String animal = "";
         // determine which animal it is
-        switch (remainder)
-        {
-            case (0): animal = "Обезьяна";
+        switch (remainder) {
+            case (0):
+                animal = "Обезьяна";
                 break;
-            case (1): animal = "Петух";
+            case (1):
+                animal = "Петух";
                 break;
-            case (2): animal = "Собака";
+            case (2):
+                animal = "Собака";
                 break;
-            case (3): animal = "Свинья";
+            case (3):
+                animal = "Свинья";
                 break;
-            case (4): animal = "Крыса";
+            case (4):
+                animal = "Крыса";
                 break;
-            case (5): animal = "Бык";
+            case (5):
+                animal = "Бык";
                 break;
-            case (6): animal = "Тигр";
+            case (6):
+                animal = "Тигр";
                 break;
-            case (7): animal = "Кролик";
+            case (7):
+                animal = "Кролик";
                 break;
-            case (8): animal = "Дракон";
+            case (8):
+                animal = "Дракон";
                 break;
-            case (9): animal = "Змея";
+            case (9):
+                animal = "Змея";
                 break;
-            case (10): animal = "Лошадь";
+            case (10):
+                animal = "Лошадь";
                 break;
-            case (11): animal = "Коза";
+            case (11):
+                animal = "Коза";
                 break;
         }
-       return animal;
+        return animal;
     }
 
-    public static String getAge(String date){
-        Date date1 = new Date(Long.parseLong(date)*1000);
+    public static String getAge(String date) {
+        Date date1 = new Date(Long.parseLong(date) * 1000);
         Calendar birthday = Calendar.getInstance();
         Calendar today = Calendar.getInstance();
 
@@ -134,7 +144,7 @@ public class Utils {
 
         int age = today.get(Calendar.YEAR) - birthday.get(Calendar.YEAR);
 
-        if (today.get(Calendar.DAY_OF_YEAR) < birthday.get(Calendar.DAY_OF_YEAR)){
+        if (today.get(Calendar.DAY_OF_YEAR) < birthday.get(Calendar.DAY_OF_YEAR)) {
             age--;
         }
 
@@ -142,9 +152,8 @@ public class Utils {
         String[] strings = {"лет", "год", "года", "лет"};
         ChoiceFormat format = new ChoiceFormat(limits, strings);
         int rule = 11 <= (age % 100) && (age % 100) <= 14 ? age : age % 10;
-        return age+ " "+format.format(rule);
+        return age + " " + format.format(rule);
     }
-
 
 
 }

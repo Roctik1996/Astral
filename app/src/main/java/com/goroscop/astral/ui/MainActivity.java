@@ -2,6 +2,7 @@ package com.goroscop.astral.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -25,11 +26,13 @@ import com.goroscop.astral.R;
 import com.goroscop.astral.model.User;
 import com.goroscop.astral.presenter.DevicePresenter;
 import com.goroscop.astral.presenter.UserPresenter;
-import com.goroscop.astral.ui.fragment.ChinaFragment;
-import com.goroscop.astral.ui.fragment.ElementFragment;
-import com.goroscop.astral.ui.fragment.HomeFragment;
-import com.goroscop.astral.ui.fragment.MetalFragment;
-import com.goroscop.astral.ui.fragment.PlanetFragment;
+import com.goroscop.astral.ui.fragment.tabs.ChinaFragment;
+import com.goroscop.astral.ui.fragment.tabs.CompatibilityFragment;
+import com.goroscop.astral.ui.fragment.tabs.ElementFragment;
+import com.goroscop.astral.ui.fragment.tabs.HomeFragment;
+import com.goroscop.astral.ui.fragment.tabs.MetalFragment;
+import com.goroscop.astral.ui.fragment.tabs.PlanetFragment;
+import com.goroscop.astral.ui.interfaces.BackToHomeInterface;
 import com.goroscop.astral.ui.interfaces.NavigationInterface;
 import com.goroscop.astral.view.ViewGetUser;
 import com.goroscop.astral.view.ViewSetDevice;
@@ -43,13 +46,14 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PRO;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
 
-public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, ViewSetDevice, NavigationInterface {
+public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, ViewSetDevice, NavigationInterface, BackToHomeInterface {
     private DrawerLayout drawerLayout;
     private SharedPreferences mSettings;
     private ProgressBar progressBar;
     private FrameLayout frame;
     private TextView title;
     private ImageView proIcon;
+    private Boolean isHome;
 
     @InjectPresenter
     UserPresenter userPresenter;
@@ -69,22 +73,9 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         progressBar = findViewById(R.id.progress);
         frame = findViewById(R.id.frame);
 
-        loadMenu();
-
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         iconMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
-
-        if (mSettings.contains(APP_PREFERENCES_PRO)) {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
-                title.setText(R.string.personal_horoscop);
-                proIcon.setVisibility(View.GONE);
-            } else {
-                title.setText("");
-                proIcon.setVisibility(View.VISIBLE);
-            }
-        }
-
 
         if (mSettings.contains(APP_PREFERENCES_IS_FIRST)) {
             if (mSettings.getString(APP_PREFERENCES_IS_FIRST, "").equals("")) {
@@ -97,10 +88,29 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         if (mSettings.contains(APP_PREFERENCES_NAME)) {
             if (!mSettings.getString(APP_PREFERENCES_NAME, "").equals("")) {
                 loadFragment(new HomeFragment());
+                loadMenu();
+                initMainTitle();
             } else
                 userPresenter.getUser("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
         } else
             userPresenter.getUser("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
+
+
+    }
+
+    private void initMainTitle(){
+        if (mSettings.contains(APP_PREFERENCES_PRO)) {
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+                title.setText(R.string.personal_horoscop);
+                proIcon.setVisibility(View.GONE);
+            } else {
+                title.setText("");
+                proIcon.setVisibility(View.VISIBLE);
+            }
+        } else {
+            title.setText("");
+            proIcon.setVisibility(View.VISIBLE);
+        }
     }
 
     private void uploadDeviceId() {
@@ -123,8 +133,12 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
 
     private void loadMenu() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_menu, new NavigationLayout(this));
-        ft.commit();
+        if (mSettings.contains(APP_PREFERENCES_PRO)) {
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+                ft.replace(R.id.frame_menu, new DrawerFragment(this,mSettings.getBoolean(APP_PREFERENCES_PRO, false)));
+                ft.commit();
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -141,9 +155,8 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         AlertDialog dialog = builder.create();
         dialog.setCancelable(false);
         btnPay.setOnClickListener(v -> {
-            //TODO: pay page
-            /*Intent intent = new Intent(Settings.ACTION_NFC_SETTINGS);
-            startActivity(intent);*/
+            Intent intent = new Intent(this, PayActivity.class);
+            startActivity(intent);
             dialog.dismiss();
         });
 
@@ -160,9 +173,11 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             editor.putString(APP_PREFERENCES_BIRTHDAY, user.getBirthday());
             editor.putString(APP_PREFERENCES_GENDER, user.getGender());
             editor.putString(APP_PREFERENCES_CITY, user.getCity());
-            editor.putBoolean(APP_PREFERENCES_PRO, user.getIsPro());
+            editor.putBoolean(APP_PREFERENCES_PRO, true);
             editor.apply();
             loadFragment(new HomeFragment());
+            loadMenu();
+            initMainTitle();
         }
     }
 
@@ -195,11 +210,15 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             title.setText("");
             proIcon.setVisibility(View.VISIBLE);
         }
+
     }
 
     @Override
     public void onCompatibilityPressed() {
-
+        drawerLayout.closeDrawers();
+        loadFragment(new CompatibilityFragment());
+        title.setText(getString(R.string.nav_compatibility));
+        proIcon.setVisibility(View.GONE);
     }
 
     @Override
@@ -240,6 +259,25 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             loadFragment(new PlanetFragment());
         } else {
             showDialog(getString(R.string.nav_planet));
+        }
+    }
+
+    @Override
+    public void onBack(boolean isHome) {
+        this.isHome = isHome;
+        if (isHome) {
+            if (mSettings.contains(APP_PREFERENCES_PRO)) {
+                if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+                    title.setText(R.string.personal_horoscop);
+                    proIcon.setVisibility(View.GONE);
+                } else {
+                    title.setText("");
+                    proIcon.setVisibility(View.VISIBLE);
+                }
+            } else {
+                title.setText("");
+                proIcon.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

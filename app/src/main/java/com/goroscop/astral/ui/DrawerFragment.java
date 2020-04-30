@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,12 +18,14 @@ import com.goroscop.astral.R;
 import com.goroscop.astral.ui.interfaces.NavigationInterface;
 
 @SuppressLint("ViewConstructor")
-public class NavigationLayout extends Fragment {
+public class DrawerFragment extends Fragment {
 
     private NavigationInterface navigationInterface;
+    private boolean isPro;
 
-    NavigationLayout(Context context) {
+    DrawerFragment(Context context, boolean isPro) {
         navigationInterface = (NavigationInterface) context;
+        this.isPro = isPro;
     }
 
     @Nullable
@@ -34,6 +38,31 @@ public class NavigationLayout extends Fragment {
         LinearLayout navElement = view.findViewById(R.id.layout_element);
         LinearLayout navMetal = view.findViewById(R.id.layout_metal);
         LinearLayout navPlanet = view.findViewById(R.id.layout_planet);
+        TextView txtElement = view.findViewById(R.id.nav_element);
+        TextView txtMetal = view.findViewById(R.id.nav_metal);
+        TextView txtPlanet = view.findViewById(R.id.nav_planet);
+        ImageView iconProElement = view.findViewById(R.id.pro_element);
+        ImageView iconProMetal = view.findViewById(R.id.pro_metal);
+        ImageView iconProPlanet = view.findViewById(R.id.pro_planet);
+
+        if (isPro){
+            txtElement.setAlpha(1f);
+            txtMetal.setAlpha(1f);
+            txtPlanet.setAlpha(1f);
+            iconProElement.setVisibility(View.GONE);
+            iconProMetal.setVisibility(View.GONE);
+            iconProPlanet.setVisibility(View.GONE);
+        }
+        else {
+            txtElement.setAlpha(0.5f);
+            txtMetal.setAlpha(0.5f);
+            txtPlanet.setAlpha(0.5f);
+            iconProElement.setVisibility(View.VISIBLE);
+            iconProMetal.setVisibility(View.VISIBLE);
+            iconProPlanet.setVisibility(View.VISIBLE);
+        }
+
+
 
         navHome.setOnClickListener(v -> navigationInterface.onHomePressed());
 

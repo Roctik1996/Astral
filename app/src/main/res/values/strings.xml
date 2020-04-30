@@ -50,4 +50,14 @@
     <string name="cancel">Отмена</string>
     <string name="element_compatibility">Совместимость с другими стихиями</string>
     <string name="success_day">Успешность дня</string>
+    <string name="choose_sign">Выберите знак</string>
+    <string name="hint_card_num">Введите номер карты</string>
+    <string name="mm">ММ</string>
+    <string name="yy">УУ</string>
+    <string name="cvv">CVV</string>
+    <string name="btn_pay">Оплатить</string>
+    <string name="you_sign">Ваш знак</string>
+    <string name="partner_sign">знак партнера</string>
+    <string name="to_home">На главную</string>
+    <string name="you_compatibility">Ваша совместимость</string>
 </resources>

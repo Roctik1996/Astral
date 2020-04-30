@@ -1,10 +1,9 @@
-package com.goroscop.astral.ui.fragment;
+package com.goroscop.astral.ui.fragment.tabs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -12,11 +11,10 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,58 +22,54 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.goroscop.astral.R;
+import com.goroscop.astral.utils.MetalConst;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
-import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PLANET;
 import static com.goroscop.astral.utils.Const.datesSign;
 import static com.goroscop.astral.utils.Const.miniChinaIcon;
 import static com.goroscop.astral.utils.Const.miniIcon;
-import static com.goroscop.astral.utils.Const.planetUrls;
 import static com.goroscop.astral.utils.Utils.getAge;
 import static com.goroscop.astral.utils.Utils.getChinaSign;
 import static com.goroscop.astral.utils.Utils.getSign;
 
-public class PlanetFragment extends Fragment {
+public class MetalFragment extends Fragment {
 
     private ImageView iconSign, iconChinaSign;
-    private TextView txtNameAge, txtSign, txtChinaSign, txtPlanet;
-    private ProgressBar progressBar;
-    private FrameLayout frame;
+    private TextView txtNameAge, txtSign, txtChinaSign,txtMetal;
 
     private SharedPreferences mSettings;
 
-    public PlanetFragment() {
+
+    public MetalFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_planet, container, false);
+        View view = inflater.inflate(R.layout.fragment_metal, container, false);
         txtNameAge = view.findViewById(R.id.txt_name_age);
         iconSign = view.findViewById(R.id.icon_sign);
         iconChinaSign = view.findViewById(R.id.icon_china_sign);
         txtSign = view.findViewById(R.id.txt_sign);
         txtChinaSign = view.findViewById(R.id.txt_china_sign);
-        txtPlanet = view.findViewById(R.id.txt_planet);
-
-        progressBar = view.findViewById(R.id.progress);
-        frame = view.findViewById(R.id.frame);
+        txtMetal = view.findViewById(R.id.txt_metal);
 
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         initPersonalInfo();
-        initPlanet();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                loadFragment(new HomeFragment());
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         return view;
     }
@@ -87,6 +81,7 @@ public class PlanetFragment extends Fragment {
         iconSign.setImageResource(miniIcon.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
         iconChinaSign.setImageResource(miniChinaIcon.get(getChinaSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
 
+        txtMetal.setText(MetalConst.metalData.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
 
         getDifferentTextForSign();
         getDifferentTextForChinaSign();
@@ -114,55 +109,10 @@ public class PlanetFragment extends Fragment {
         txtChinaSign.append(wordTwo);
     }
 
-    private void initPlanet() {
-        if (mSettings.contains(APP_PREFERENCES_PLANET)) {
-            if (!mSettings.getString(APP_PREFERENCES_PLANET, "").equals("")) {
-                txtPlanet.setText(mSettings.getString(APP_PREFERENCES_PLANET, ""));
-            } else new ParseData().execute();
-        } else new ParseData().execute();
-    }
-
-    private class ParseData extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... params) {
-            showProgress(true);
-            StringBuilder result = new StringBuilder();
-            try {
-                Document doc = Jsoup.connect(planetUrls.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, "")))).get();
-                Elements newsHeadlines = doc.select("p");
-                for (Element headline : newsHeadlines) {
-                    result.append(headline).append("\n\n");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String data = result.toString().replaceAll("<p>", "").replaceAll("</p>", "");
-
-            return data.substring(0, data.length() - 2);
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            showProgress(false);
-            SharedPreferences.Editor editor = mSettings.edit();
-            editor.putString(APP_PREFERENCES_PLANET, result);
-            editor.apply();
-            txtPlanet.setText(result);
-        }
-    }
-
-    public void showProgress(boolean isLoading) {
-        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-        frame.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-    }
 
     private void loadFragment(Fragment fragment) {
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.horoscope_frame, fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
         ft.commit();
     }
 }

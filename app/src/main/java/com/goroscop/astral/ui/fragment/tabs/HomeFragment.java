@@ -1,4 +1,4 @@
-package com.goroscop.astral.ui.fragment;
+package com.goroscop.astral.ui.fragment.tabs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -31,6 +31,8 @@ import com.goroscop.astral.R;
 import com.goroscop.astral.model.Horoscope;
 import com.goroscop.astral.presenter.HoroscopePresenter;
 import com.goroscop.astral.ui.adapter.LuckyNumAdapter;
+import com.goroscop.astral.ui.fragment.HoroscopeFragment;
+import com.goroscop.astral.ui.interfaces.BackToHomeInterface;
 import com.goroscop.astral.view.ViewHoroscope;
 
 import java.text.SimpleDateFormat;
@@ -44,7 +46,6 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_CHINA;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
-import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PLANET;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_SUCCESS;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
 import static com.goroscop.astral.utils.Const.avatarIcon;
@@ -97,6 +98,9 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         love = view.findViewById(R.id.circular_love);
         health = view.findViewById(R.id.circular_health);
         career = view.findViewById(R.id.circular_career);
+
+        BackToHomeInterface backToHomeInterface = (BackToHomeInterface) getActivity();
+        backToHomeInterface.onBack(true);
 
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -164,9 +168,6 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
     @Override
     public void getHoroscope(Horoscope horoscope) {
         if (horoscope != null) {
-            love.setProgressDisplay(horoscope.getToday().getLove());
-            health.setProgressDisplay(horoscope.getToday().getHealth());
-            career.setProgressDisplay(horoscope.getToday().getCareer());
 
             horoscopeData.add(horoscope.getToday().getInfo());
             horoscopeData.add(horoscope.getTomorrow());
@@ -174,13 +175,18 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
             horoscopeData.add(horoscope.getMonth());
             horoscopeData.add(horoscope.getYear());
 
-            loadFragment(new HoroscopeFragment(horoscopeData.get(0)));
-            initTabHoroscope();
+            loadFragment(new HoroscopeFragment(horoscopeData.get(0),horoscope.getToday().getSuccessDay()));
+            initTabHoroscope(horoscope.getToday().getSuccessDay());
 
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             recyclerLucky.setLayoutManager(layoutManager);
             count.addAll(horoscope.getToday().getLuckNumbers());
             recyclerLucky.setAdapter(new LuckyNumAdapter(count));
+
+            love.setProgressDisplayAndInvalidate(horoscope.getToday().getLove());
+            health.setProgressDisplayAndInvalidate(horoscope.getToday().getHealth());
+            career.setProgressDisplayAndInvalidate(horoscope.getToday().getCareer());
+
 
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putString(APP_PREFERENCES_CHINA, horoscope.getChina().getInfo());
@@ -201,7 +207,7 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
     }
 
-    private void initTabHoroscope() {
+    private void initTabHoroscope(int success) {
         TabLayout.Tab today = tabLayout.newTab();
         today.setText(tabTitle[0]);
         tabLayout.addTab(today);
@@ -228,21 +234,21 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        loadFragment(new HoroscopeFragment(horoscopeData.get(0)));
+                        loadFragment(new HoroscopeFragment(horoscopeData.get(0),success));
                         break;
                     case 1:
-                        loadFragment(new HoroscopeFragment(horoscopeData.get(1)));
+                        loadFragment(new HoroscopeFragment(horoscopeData.get(1),-1));
                         break;
                     case 2:
-                        loadFragment(new HoroscopeFragment(horoscopeData.get(2)));
+                        loadFragment(new HoroscopeFragment(horoscopeData.get(2),-1));
                         break;
 
                     case 3:
-                        loadFragment(new HoroscopeFragment(horoscopeData.get(3)));
+                        loadFragment(new HoroscopeFragment(horoscopeData.get(3),-1));
                         break;
 
                     case 4:
-                        loadFragment(new HoroscopeFragment(horoscopeData.get(4)));
+                        loadFragment(new HoroscopeFragment(horoscopeData.get(4),-1));
                         break;
                 }
             }
