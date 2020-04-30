@@ -28,7 +28,7 @@ public class RegistrationPresenter extends MvpPresenter<ViewGetToken> {
     }
 
     public void registration(String name,
-                      Long birthday,
+                      String birthday,
                       String gender,
                       String city,
                       String email,

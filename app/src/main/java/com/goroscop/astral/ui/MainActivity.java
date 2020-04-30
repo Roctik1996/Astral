@@ -19,6 +19,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -27,6 +31,7 @@ import com.goroscop.astral.R;
 import com.goroscop.astral.model.User;
 import com.goroscop.astral.presenter.DevicePresenter;
 import com.goroscop.astral.presenter.UserPresenter;
+import com.goroscop.astral.service.ClearWorker;
 import com.goroscop.astral.ui.fragment.DrawerFragment;
 import com.goroscop.astral.ui.fragment.tabs.ChinaFragment;
 import com.goroscop.astral.ui.fragment.tabs.CompatibilityFragment;
@@ -37,6 +42,8 @@ import com.goroscop.astral.ui.fragment.tabs.PlanetFragment;
 import com.goroscop.astral.ui.interfaces.NavigationInterface;
 import com.goroscop.astral.view.ViewGetUser;
 import com.goroscop.astral.view.ViewSetDevice;
+
+import java.util.concurrent.TimeUnit;
 
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
@@ -80,15 +87,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         iconMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
         if (mSettings.contains(APP_PREFERENCES_IS_FIRST)) {
-            if (mSettings.getString(APP_PREFERENCES_IS_FIRST, "").equals("")) {
-                uploadDeviceId();
-            }
-        } else {
-            uploadDeviceId();
-        }
-
-        if (mSettings.contains(APP_PREFERENCES_NAME)) {
-            if (!mSettings.getString(APP_PREFERENCES_NAME, "").equals("")) {
+            if (!mSettings.getString(APP_PREFERENCES_IS_FIRST, "").equals("")) {
                 loadFragment(new HomeFragment());
                 loadMenu();
                 initMainTitle();
@@ -98,6 +97,13 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             userPresenter.getUser("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
 
 
+        Constraints myConstraints = new Constraints.Builder()
+                .setRequiresBatteryNotLow(true)
+                .build();
+        PeriodicWorkRequest periodicWork = new PeriodicWorkRequest.Builder(ClearWorker.class, 30, TimeUnit.SECONDS)
+                .setConstraints(myConstraints)
+                .build();
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("WORKER", ExistingPeriodicWorkPolicy.REPLACE, periodicWork);
     }
 
     private void initMainTitle() {
@@ -176,6 +182,14 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             loadFragment(new HomeFragment());
             loadMenu();
             initMainTitle();
+
+            if (mSettings.contains(APP_PREFERENCES_IS_FIRST)) {
+                if (mSettings.getString(APP_PREFERENCES_IS_FIRST, "").equals("")) {
+                    uploadDeviceId();
+                }
+            } else {
+                uploadDeviceId();
+            }
         }
     }
 

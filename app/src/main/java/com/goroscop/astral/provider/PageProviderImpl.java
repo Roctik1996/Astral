@@ -20,7 +20,7 @@ public class PageProviderImpl {
     }
 
     public Single<Token> registration(String name,
-                                      Long birthday,
+                                      String birthday,
                                       String gender,
                                       String city,
                                       String email,

@@ -40,7 +40,7 @@ public class MailPassFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (validate(mail, pass)) {
+        if (validateMail(mail)&&validatePass(pass)) {
             registrationInterface.onNext(true, "");
         }
     }
@@ -63,7 +63,7 @@ public class MailPassFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mail = String.valueOf(s);
-                if (validate(mail, pass)) {
+                if (validateMail(mail)) {
                     SharedPreferences.Editor editor = mSettings.edit();
                     editor.putString(APP_PREFERENCES_EMAIL, mail);
                     editor.apply();
@@ -85,7 +85,7 @@ public class MailPassFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 pass = String.valueOf(s);
-                if (validate(mail, pass)) {
+                if (validatePass(pass)) {
                     SharedPreferences.Editor editor = mSettings.edit();
                     editor.putString(APP_PREFERENCES_PASS, pass);
                     editor.apply();
@@ -102,7 +102,7 @@ public class MailPassFragment extends Fragment {
         return view;
     }
 
-    private boolean validate(String email, String password) {
+    private boolean validateMail(String email) {
         if (isEmpty(email)) {
             registrationInterface.onNext(false, getString(R.string.error_empty_mail));
             return false;
@@ -110,6 +110,10 @@ public class MailPassFragment extends Fragment {
             registrationInterface.onNext(false, getString(R.string.error_email_invalid));
             return false;
         }
+        return true;
+    }
+
+    private boolean validatePass(String password) {
         if (isEmpty(password)) {
             registrationInterface.onNext(false, getString(R.string.error_pass_empty));
             return false;

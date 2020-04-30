@@ -156,7 +156,7 @@ public class RegistrationActivity extends MvpAppCompatActivity implements Regist
                 }
                 if (error.equals("completed")) {
                     registrationPresenter.registration(mSettings.getString(APP_PREFERENCES_NAME,""),
-                            mSettings.getLong(APP_PREFERENCES_BIRTHDAY,0L),
+                            mSettings.getString(APP_PREFERENCES_BIRTHDAY,""),
                             mSettings.getString(APP_PREFERENCES_GENDER,""),
                             mSettings.getString(APP_PREFERENCES_CITY,""),
                             mSettings.getString(APP_PREFERENCES_EMAIL,""),

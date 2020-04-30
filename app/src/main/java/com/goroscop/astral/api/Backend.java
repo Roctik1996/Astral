@@ -16,7 +16,7 @@ public interface Backend {
     @Multipart
     @POST("/api/registration")
     Single<Token> registration(@Part("name") String name,
-                               @Part("birthday") Long birthday,
+                               @Part("birthday") String birthday,
                                @Part("gender") String gender,
                                @Part("city") String city,
                                @Part("email") String email,
