@@ -170,12 +170,17 @@ public class RegistrationActivity extends MvpAppCompatActivity implements Regist
     @Override
     public void getToken(Token token) {
         if (token!=null) {
-            SharedPreferences.Editor editor = mSettings.edit();
-            editor.putString(APP_PREFERENCES_TOKEN, token.getToken());
-            editor.apply();
-            Intent mainActivity = new Intent(this,MainActivity.class);
-            startActivity(mainActivity);
-            finish();
+            if (token.getToken()!=null) {
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString(APP_PREFERENCES_TOKEN, token.getToken());
+                editor.apply();
+                Intent mainActivity = new Intent(this, MainActivity.class);
+                startActivity(mainActivity);
+                finish();
+            }
+            else {
+                Toast.makeText(this, R.string.error_email_exist, Toast.LENGTH_LONG).show();
+            }
         }
         else {
             Toast.makeText(this, R.string.error_email_exist, Toast.LENGTH_LONG).show();

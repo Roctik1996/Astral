@@ -30,7 +30,7 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_CHINA;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
-import static com.goroscop.astral.utils.Const.APP_PREFERENCES_SUCCESS;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_SUCCESS_CHINA;
 import static com.goroscop.astral.utils.Const.avatarChinaIcon;
 import static com.goroscop.astral.utils.Const.chinaAll;
 import static com.goroscop.astral.utils.Const.datesSign;
@@ -95,8 +95,8 @@ public class ChinaFragment extends Fragment {
 
         txtChina.setText(mSettings.getString(APP_PREFERENCES_CHINA, ""));
         txtChinaAll.setText(chinaAll.get(getChinaSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
-        progressBar.setProgress(mSettings.getInt(APP_PREFERENCES_SUCCESS, 0));
-        txtSuccessProgress.setText(mSettings.getInt(APP_PREFERENCES_SUCCESS, 0) + "%");
+        progressBar.setProgress(mSettings.getInt(APP_PREFERENCES_SUCCESS_CHINA, 0));
+        txtSuccessProgress.setText(mSettings.getInt(APP_PREFERENCES_SUCCESS_CHINA, 0) + "%");
     }
 
     private void getDifferentTextForSign() {

@@ -19,8 +19,21 @@ public class Const {
     public static final String APP_PREFERENCES_IS_FIRST = "is_first";
     public static final String APP_PREFERENCES_PLANET = "planet";
     public static final String APP_PREFERENCES_PRO = "pro";
+    public static final String APP_PREFERENCES_IS_HOROSCOPE = "horoscope";
+
+    public static final String APP_PREFERENCES_TODAY = "today";
+    public static final String APP_PREFERENCES_TODAY_SUCCESS = "success_today";
     public static final String APP_PREFERENCES_CHINA = "china";
-    public static final String APP_PREFERENCES_SUCCESS = "success";
+    public static final String APP_PREFERENCES_SUCCESS_CHINA = "success_china";
+    public static final String APP_PREFERENCES_TOMORROW = "tomorrow";
+    public static final String APP_PREFERENCES_WEEK = "week";
+    public static final String APP_PREFERENCES_MONTH = "month";
+    public static final String APP_PREFERENCES_YEAR = "year";
+    public static final String APP_PREFERENCES_LUCK_NUMBER = "luck_number";
+    public static final String APP_PREFERENCES_LOVE = "love";
+    public static final String APP_PREFERENCES_HEALTH = "health";
+    public static final String APP_PREFERENCES_CAREER = "career";
+
 
     public static final String[] tabTitle = new String[]{"Сегодня",
             "Завтра",

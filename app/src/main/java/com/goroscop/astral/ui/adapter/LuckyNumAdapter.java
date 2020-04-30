@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 public class LuckyNumAdapter extends RecyclerView.Adapter<LuckyNumAdapter.LuckyViewHolder> {
 
-    private ArrayList<Integer> data;
+    private ArrayList<String> data;
 
-    public LuckyNumAdapter(ArrayList<Integer> data) {
+    public LuckyNumAdapter(ArrayList<String> data) {
         this.data = data;
     }
 

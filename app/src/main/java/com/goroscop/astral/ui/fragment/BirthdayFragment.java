@@ -38,6 +38,14 @@ public class BirthdayFragment extends Fragment implements DatePickerDialog.OnDat
     public BirthdayFragment() {
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (validate(date)) {
+            registrationInterface.onNext(true, "");
+        }
+    }
+
     @SuppressLint("SimpleDateFormat")
     @Nullable
     @Override
@@ -50,9 +58,7 @@ public class BirthdayFragment extends Fragment implements DatePickerDialog.OnDat
 
         formatter = new SimpleDateFormat("dd MMMM, yyyy");
 
-        if (validate(date)) {
-            registrationInterface.onNext(true, "");
-        }
+
 
         datePickerDialog = DatePickerDialog.newInstance(
                 this,

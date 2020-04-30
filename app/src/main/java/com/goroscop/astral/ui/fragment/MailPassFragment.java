@@ -40,9 +40,13 @@ public class MailPassFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (validateMail(mail)&&validatePass(pass)) {
+        if (validateMail(mail)) {
             registrationInterface.onNext(true, "");
         }
+        if (validatePass(pass)){
+            registrationInterface.onNext(true, "");
+        }
+
     }
 
     @Nullable
@@ -68,6 +72,9 @@ public class MailPassFragment extends Fragment {
                     editor.putString(APP_PREFERENCES_EMAIL, mail);
                     editor.apply();
                     registrationInterface.onNext(true, "next");
+                    if (validatePass(pass)){
+                        registrationInterface.onNext(true, "");
+                    }
                 }
             }
 

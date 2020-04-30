@@ -43,6 +43,7 @@ import com.goroscop.astral.ui.interfaces.NavigationInterface;
 import com.goroscop.astral.view.ViewGetUser;
 import com.goroscop.astral.view.ViewSetDevice;
 
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
@@ -50,6 +51,7 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_CITY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_GENDER;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_IS_FIRST;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_IS_HOROSCOPE;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PRO;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
@@ -97,13 +99,48 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             userPresenter.getUser("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
 
 
+        int hourOfTheDay = 4; // When to run the job
+        int repeatInterval = 1; // In days
+
+        long flexTime = calculateFlex(hourOfTheDay, repeatInterval);
         Constraints myConstraints = new Constraints.Builder()
                 .setRequiresBatteryNotLow(true)
+                .setRequiresDeviceIdle(true)
                 .build();
-        PeriodicWorkRequest periodicWork = new PeriodicWorkRequest.Builder(ClearWorker.class, 30, TimeUnit.SECONDS)
-                .setConstraints(myConstraints)
-                .build();
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork("WORKER", ExistingPeriodicWorkPolicy.REPLACE, periodicWork);
+
+        PeriodicWorkRequest workRequest =
+                new PeriodicWorkRequest.Builder(ClearWorker.class,
+                        repeatInterval, TimeUnit.DAYS,
+                        flexTime, TimeUnit.MILLISECONDS)
+                        .setConstraints(myConstraints)
+                        .build();
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("WORKER",
+                ExistingPeriodicWorkPolicy.REPLACE,
+                workRequest);
+
+    }
+
+    private long calculateFlex(int hourOfTheDay, int periodInDays) {
+
+        // Initialize the calendar with today and the preferred time to run the job.
+        Calendar cal1 = Calendar.getInstance();
+        cal1.set(Calendar.HOUR_OF_DAY, hourOfTheDay);
+        cal1.set(Calendar.MINUTE, 0);
+        cal1.set(Calendar.SECOND, 0);
+
+        // Initialize a calendar with now.
+        Calendar cal2 = Calendar.getInstance();
+
+        if (cal2.getTimeInMillis() < cal1.getTimeInMillis()) {
+            // Add the worker periodicity.
+            cal2.setTimeInMillis(cal2.getTimeInMillis() + TimeUnit.DAYS.toMillis(periodInDays));
+        }
+
+        long delta = (cal2.getTimeInMillis() - cal1.getTimeInMillis());
+
+        return ((delta > PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS) ? delta
+                : PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS);
     }
 
     private void initMainTitle() {
@@ -177,6 +214,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             editor.putString(APP_PREFERENCES_BIRTHDAY, user.getBirthday());
             editor.putString(APP_PREFERENCES_GENDER, user.getGender());
             editor.putString(APP_PREFERENCES_CITY, user.getCity());
+            editor.putString(APP_PREFERENCES_IS_HOROSCOPE, "false");
             editor.putBoolean(APP_PREFERENCES_PRO, true);
             editor.apply();
             loadFragment(new HomeFragment());

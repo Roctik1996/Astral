@@ -30,6 +30,14 @@ public class NameFragment extends Fragment {
     public NameFragment() {
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (validate(name)) {
+            registrationInterface.onNext(true, "");
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,9 +45,7 @@ public class NameFragment extends Fragment {
         txtName = view.findViewById(R.id.edt_name);
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         registrationInterface = (RegistrationInterface) getActivity();
-        if (validate(name)) {
-            registrationInterface.onNext(true, "");
-        }
+
         txtName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

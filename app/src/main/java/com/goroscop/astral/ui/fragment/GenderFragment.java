@@ -23,6 +23,7 @@ public class GenderFragment extends Fragment {
     private ToggleButton male, female;
     private SharedPreferences mSettings;
     private RegistrationInterface registrationInterface;
+    private boolean checkMale=false,checkFemale=false;
 
     public GenderFragment() {
     }
@@ -30,7 +31,7 @@ public class GenderFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (validate(false, false)) {
+        if (validate(checkMale, checkFemale)) {
             registrationInterface.onNext(true, "");
         }
     }
@@ -48,8 +49,10 @@ public class GenderFragment extends Fragment {
 
         male.setOnClickListener(v -> {
             male.setChecked(true);
+            checkMale=true;
             if (male.isChecked()) {
                 female.setChecked(false);
+                checkFemale=false;
             }
 
             if (validate(male.isChecked(), female.isChecked())) {
@@ -62,8 +65,10 @@ public class GenderFragment extends Fragment {
 
         female.setOnClickListener(v -> {
             female.setChecked(true);
+            checkFemale=true;
             if (female.isChecked()) {
                 male.setChecked(false);
+                checkMale=false;
             }
 
             if (validate(male.isChecked(), female.isChecked())) {
