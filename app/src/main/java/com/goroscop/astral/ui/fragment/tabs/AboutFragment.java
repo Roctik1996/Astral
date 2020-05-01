@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -19,7 +18,7 @@ import com.goroscop.astral.R;
 
 public class AboutFragment extends Fragment {
 
-    public AboutFragment(){
+    public AboutFragment() {
 
     }
 
