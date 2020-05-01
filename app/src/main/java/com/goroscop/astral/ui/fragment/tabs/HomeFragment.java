@@ -157,6 +157,12 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         if (mSettings.contains(APP_PREFERENCES_TOKEN)) {
+            if (!mSettings.getString(APP_PREFERENCES_TOKEN, "").equals("")) {
+                horoscopePresenter.getHoroscope("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
+            }
+        }
+
+        /*if (mSettings.contains(APP_PREFERENCES_TOKEN)) {
             if (!mSettings.getString(APP_PREFERENCES_TOKEN, "").equals("") && mSettings.getString(APP_PREFERENCES_IS_HOROSCOPE, "").equals("false")) {
                 horoscopePresenter.getHoroscope("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
             } else {
@@ -164,7 +170,7 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
             }
         } else {
             initHome();
-        }
+        }*/
 
         initPersonalInfo();
 

@@ -48,6 +48,8 @@ public class DrawerFragment extends Fragment {
         LinearLayout navElement = view.findViewById(R.id.layout_element);
         LinearLayout navMetal = view.findViewById(R.id.layout_metal);
         LinearLayout navPlanet = view.findViewById(R.id.layout_planet);
+        LinearLayout navAbout = view.findViewById(R.id.layout_about);
+        LinearLayout navExit = view.findViewById(R.id.layout_exit);
         TextView txtElement = view.findViewById(R.id.nav_element);
         TextView txtMetal = view.findViewById(R.id.nav_metal);
         TextView txtPlanet = view.findViewById(R.id.nav_planet);
@@ -81,9 +83,7 @@ public class DrawerFragment extends Fragment {
         birthday.setTime(date1);
         txtYear.setText("(" + birthday.get(Calendar.YEAR) + ")");
 
-        navHome.setOnClickListener(v -> {
-            navigationInterface.onHomePressed();
-        });
+        navHome.setOnClickListener(v -> navigationInterface.onHomePressed());
 
         navCompatibility.setOnClickListener(v -> navigationInterface.onCompatibilityPressed());
 
@@ -94,6 +94,11 @@ public class DrawerFragment extends Fragment {
         navMetal.setOnClickListener(v -> navigationInterface.onMetalPressed());
 
         navPlanet.setOnClickListener(v -> navigationInterface.onPlanetPressed());
+
+        navAbout.setOnClickListener(v -> navigationInterface.onAboutPressed());
+
+        navExit.setOnClickListener(v -> navigationInterface.onExitPressed());
+
         return view;
     }
 }

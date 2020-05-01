@@ -33,6 +33,7 @@ import com.goroscop.astral.presenter.DevicePresenter;
 import com.goroscop.astral.presenter.UserPresenter;
 import com.goroscop.astral.service.ClearWorker;
 import com.goroscop.astral.ui.fragment.DrawerFragment;
+import com.goroscop.astral.ui.fragment.tabs.AboutFragment;
 import com.goroscop.astral.ui.fragment.tabs.ChinaFragment;
 import com.goroscop.astral.ui.fragment.tabs.CompatibilityFragment;
 import com.goroscop.astral.ui.fragment.tabs.ElementFragment;
@@ -346,6 +347,31 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
                 showDialog(getString(R.string.nav_planet));
             }
         }
+    }
+
+    @Override
+    public void onAboutPressed() {
+        drawerLayout.closeDrawers();
+        currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+
+        if (currentFragment instanceof AboutFragment) {
+            Log.d(TAG, "Fragment is opened now");
+        } else {
+            loadFragment(new AboutFragment());
+            title.setText(getString(R.string.nav_about));
+            proIcon.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onExitPressed() {
+        drawerLayout.closeDrawers();
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.clear();
+        editor.apply();
+        Intent loginActivity = new Intent(this,LoginActivity.class);
+        startActivity(loginActivity);
+        finish();
     }
 
     @Override

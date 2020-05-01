@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Astral - персональный гороскоп</string>
+    <string name="app_name">Astral</string>
 
     <string name="default_notification_channel_id">com.goroscop.astral.chanel</string>
     <string name="astral">Astral</string>
@@ -61,4 +61,12 @@
     <string name="to_home">На главную</string>
     <string name="you_compatibility">Ваша совместимость</string>
     <string name="detail">Подробнее</string>
+    <string name="nav_about">О приложении</string>
+    <string name="nav_exit">Выход</string>
+    <string name="about_title">Astral - персональный гороскоп</string>
+    <string name="about_content">About Content</string>
+    <string name="document">Документация</string>
+    <string name="license">Лицензионное соглашение</string>
+    <string name="site">Открыть сайт</string>
+    <string name="support">Написать поддержке</string>
 </resources>

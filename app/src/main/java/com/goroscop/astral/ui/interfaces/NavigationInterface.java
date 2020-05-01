@@ -7,4 +7,6 @@ public interface NavigationInterface {
     void onElementPressed();
     void onMetalPressed();
     void onPlanetPressed();
+    void onAboutPressed();
+    void onExitPressed();
 }
