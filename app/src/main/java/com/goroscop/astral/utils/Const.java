@@ -19,7 +19,6 @@ public class Const {
     public static final String APP_PREFERENCES_IS_FIRST = "is_first";
     public static final String APP_PREFERENCES_PLANET = "planet";
     public static final String APP_PREFERENCES_PRO = "pro";
-    public static final String APP_PREFERENCES_IS_HOROSCOPE = "horoscope";
 
     public static final String APP_PREFERENCES_TODAY = "today";
     public static final String APP_PREFERENCES_TODAY_SUCCESS = "success_today";

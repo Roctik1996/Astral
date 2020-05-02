@@ -60,7 +60,6 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_CAREER;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_CHINA;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_HEALTH;
-import static com.goroscop.astral.utils.Const.APP_PREFERENCES_IS_HOROSCOPE;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_LOVE;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_LUCK_NUMBER;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_MONTH;
@@ -161,16 +160,6 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
                 horoscopePresenter.getHoroscope("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
             }
         }
-
-        /*if (mSettings.contains(APP_PREFERENCES_TOKEN)) {
-            if (!mSettings.getString(APP_PREFERENCES_TOKEN, "").equals("") && mSettings.getString(APP_PREFERENCES_IS_HOROSCOPE, "").equals("false")) {
-                horoscopePresenter.getHoroscope("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
-            } else {
-                initHome();
-            }
-        } else {
-            initHome();
-        }*/
 
         initPersonalInfo();
 
@@ -299,7 +288,6 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
             }
             Set<String> foo = new HashSet<>(count);
             editor.putStringSet(APP_PREFERENCES_LUCK_NUMBER, foo);
-            editor.putString(APP_PREFERENCES_IS_HOROSCOPE, "true");
             editor.apply();
             initHome();
         }
