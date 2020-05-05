@@ -207,16 +207,8 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
 
     private void initHome() {
 
-        if (mSettings.contains(APP_PREFERENCES_PRO)) {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
-                contentPro.setVisibility(View.VISIBLE);
-                initProContent();
-            } else {
-                contentPro.setVisibility(View.GONE);
-            }
-        } else {
-            contentPro.setVisibility(View.GONE);
-        }
+        contentPro.setVisibility(View.VISIBLE);
+        initProContent();
 
         horoscopeData.add(mSettings.getString(APP_PREFERENCES_TODAY, ""));
         horoscopeData.add(mSettings.getString(APP_PREFERENCES_TOMORROW, ""));

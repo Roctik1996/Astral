@@ -58,7 +58,6 @@ public class PreviewDialog extends DialogFragment {
         pageIndicatorView.setSelection(2);
 
         previewPager.setOffscreenPageLimit(5);
-        previewPager.setUserInputEnabled(false);
         PreviewAdapter previewAdapter = new PreviewAdapter(previewData);
         previewPager.setAdapter(previewAdapter);
 
