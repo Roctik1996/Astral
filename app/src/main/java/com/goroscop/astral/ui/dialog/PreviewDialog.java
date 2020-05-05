@@ -74,6 +74,11 @@ public class PreviewDialog extends DialogFragment {
                     /*txtRules.setVisibility(View.VISIBLE);
                     checkBox.setVisibility(View.VISIBLE);*/
                 }
+                else{
+                    txtCancel.setVisibility(View.GONE);
+                    pageIndicatorView.setVisibility(View.VISIBLE);
+                    btnNext.setText(R.string.dialog_btn);
+                }
             }
         });
 
