@@ -1,6 +1,7 @@
 package com.goroscop.astral.ui.adapter;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,6 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
         }
     }
     public void onItemClick(View view, int position) {
-        System.out.println(position);
+        Log.d("Item click", String.valueOf(position));
     }
 }

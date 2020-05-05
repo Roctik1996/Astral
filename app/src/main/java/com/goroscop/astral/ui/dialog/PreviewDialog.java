@@ -24,7 +24,6 @@ import com.rd.PageIndicatorView;
 import static com.goroscop.astral.utils.Const.previewData;
 
 public class PreviewDialog extends DialogFragment {
-    private ViewPager2 previewPager;
     private Button btnNext;
 
     @Override
@@ -46,15 +45,12 @@ public class PreviewDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_preview, null);
-        previewPager = view.findViewById(R.id.preview_pager);
+        ViewPager2 previewPager = view.findViewById(R.id.preview_pager);
         PageIndicatorView pageIndicatorView = view.findViewById(R.id.pageIndicatorView);
         TextView txtCancel = view.findViewById(R.id.txt_cancel);
         btnNext = view.findViewById(R.id.btn_next);
-        /*CheckBox checkBox = view.findViewById(R.id.checkbox);
-        TextView txtRules = view.findViewById(R.id.txt_rules);
-        txtRules.setMovementMethod(LinkMovementMethod.getInstance());*/
 
-        pageIndicatorView.setCount(4); // specify total count of indicators
+        pageIndicatorView.setCount(4);
         pageIndicatorView.setSelection(2);
 
         previewPager.setOffscreenPageLimit(5);
@@ -71,8 +67,6 @@ public class PreviewDialog extends DialogFragment {
                     txtCancel.setVisibility(View.VISIBLE);
                     pageIndicatorView.setVisibility(View.GONE);
                     btnNext.setText(R.string.btn_trial);
-                    /*txtRules.setVisibility(View.VISIBLE);
-                    checkBox.setVisibility(View.VISIBLE);*/
                 }
                 else{
                     txtCancel.setVisibility(View.GONE);

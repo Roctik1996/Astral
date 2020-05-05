@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.goroscop.astral.R;
 import com.goroscop.astral.ui.interfaces.RegistrationInterface;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +28,6 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_EMAIL;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PASS;
 
 public class MailPassFragment extends Fragment {
-    private EditText edtMail, edtPass;
     private String mail = "";
     private String pass = "";
     private RegistrationInterface registrationInterface;
@@ -53,10 +53,10 @@ public class MailPassFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mail_pass, container, false);
-        edtMail = view.findViewById(R.id.edt_mail);
-        edtPass = view.findViewById(R.id.edt_pass);
+        EditText edtMail = view.findViewById(R.id.edt_mail);
+        EditText edtPass = view.findViewById(R.id.edt_pass);
 
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mSettings = Objects.requireNonNull(getActivity()).getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         registrationInterface = (RegistrationInterface) getActivity();
 
         edtMail.addTextChangedListener(new TextWatcher() {

@@ -25,6 +25,7 @@ import com.goroscop.astral.utils.MetalConst;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
@@ -58,11 +59,11 @@ public class MetalFragment extends Fragment {
         txtChinaSign = view.findViewById(R.id.txt_china_sign);
         txtMetal = view.findViewById(R.id.txt_metal);
 
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mSettings = Objects.requireNonNull(getActivity()).getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         initPersonalInfo();
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 loadFragment(new HomeFragment());
@@ -110,7 +111,7 @@ public class MetalFragment extends Fragment {
 
 
     private void loadFragment(Fragment fragment) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
     }

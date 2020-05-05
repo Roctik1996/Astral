@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.goroscop.astral.R;
 
+import java.util.Objects;
+
 public class AboutFragment extends Fragment {
 
     public AboutFragment() {
@@ -49,7 +51,7 @@ public class AboutFragment extends Fragment {
             startActivity(intent);
         });
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 loadFragment(new HomeFragment());
@@ -61,7 +63,7 @@ public class AboutFragment extends Fragment {
     }
 
     private void loadFragment(Fragment fragment) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
     }

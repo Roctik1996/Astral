@@ -18,7 +18,6 @@ import static com.goroscop.astral.network.UnsafeOkHttpClient.getUnsafeOkHttpClie
 
 
 public class NetworkModule {
-    private static volatile Retrofit sRetrofit;
 
     private static OkHttpClient generateOkHttpClient() {
         HttpLoggingInterceptorHeavyFilesSafe httpLoggingInterceptor = new HttpLoggingInterceptorHeavyFilesSafe();

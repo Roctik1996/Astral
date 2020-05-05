@@ -29,7 +29,6 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
 
 public class LoginActivity extends MvpAppCompatActivity implements ViewGetToken {
 
-    private EditText edtMail,edtPass;
     private SharedPreferences mSettings;
 
     private ProgressBar progressBar;
@@ -42,8 +41,8 @@ public class LoginActivity extends MvpAppCompatActivity implements ViewGetToken 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        edtMail = findViewById(R.id.edt_mail);
-        edtPass = findViewById(R.id.edt_pass);
+        EditText edtMail = findViewById(R.id.edt_mail);
+        EditText edtPass = findViewById(R.id.edt_pass);
         Button btnLogin = findViewById(R.id.btn_login);
         TextView txtReg = findViewById(R.id.txt_registration);
 

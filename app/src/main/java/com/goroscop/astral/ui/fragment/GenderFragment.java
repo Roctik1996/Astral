@@ -15,15 +15,15 @@ import androidx.fragment.app.Fragment;
 import com.goroscop.astral.R;
 import com.goroscop.astral.ui.interfaces.RegistrationInterface;
 
+import java.util.Objects;
+
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_GENDER;
 
 public class GenderFragment extends Fragment {
 
-    private ToggleButton male, female;
-    private SharedPreferences mSettings;
     private RegistrationInterface registrationInterface;
-    private boolean checkMale=false,checkFemale=false;
+    private boolean checkMale = false, checkFemale = false;
 
     public GenderFragment() {
     }
@@ -40,19 +40,19 @@ public class GenderFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gender, container, false);
-        male = view.findViewById(R.id.toggle_male);
-        female = view.findViewById(R.id.toggle_female);
+        ToggleButton male = view.findViewById(R.id.toggle_male);
+        ToggleButton female = view.findViewById(R.id.toggle_female);
 
         registrationInterface = (RegistrationInterface) getActivity();
 
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences mSettings = Objects.requireNonNull(getActivity()).getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         male.setOnClickListener(v -> {
             male.setChecked(true);
-            checkMale=true;
+            checkMale = true;
             if (male.isChecked()) {
                 female.setChecked(false);
-                checkFemale=false;
+                checkFemale = false;
             }
 
             if (validate(male.isChecked(), female.isChecked())) {
@@ -65,10 +65,10 @@ public class GenderFragment extends Fragment {
 
         female.setOnClickListener(v -> {
             female.setChecked(true);
-            checkFemale=true;
+            checkFemale = true;
             if (female.isChecked()) {
                 male.setChecked(false);
-                checkMale=false;
+                checkMale = false;
             }
 
             if (validate(male.isChecked(), female.isChecked())) {

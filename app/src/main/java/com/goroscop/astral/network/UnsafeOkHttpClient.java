@@ -16,8 +16,8 @@ import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 
-public class UnsafeOkHttpClient {
-    public static OkHttpClient getUnsafeOkHttpClient() {
+class UnsafeOkHttpClient {
+    static OkHttpClient getUnsafeOkHttpClient() {
         try {
             // Create a trust manager that does not validate certificate chains
             final TrustManager[] trustAllCerts = new TrustManager[]{

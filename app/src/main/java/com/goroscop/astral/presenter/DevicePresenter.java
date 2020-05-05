@@ -33,12 +33,8 @@ public class DevicePresenter extends MvpPresenter<ViewSetDevice> {
         addBackgroundDisposable(
                 ProviderModule.getUserProvider().setDevice(token, fcmToken, deviceId, "android", 1)
                         .compose(RxUtils.ioToMainTransformerSingle())
-                        .subscribe(success -> {
-                                    getViewState().setDevice(success);
-                                },
-                                error -> {
-                                    Log.d(TAG, Objects.requireNonNull(error.getMessage()));
-                                }
+                        .subscribe(success -> getViewState().setDevice(success),
+                                error -> Log.d(TAG, Objects.requireNonNull(error.getMessage()))
                         ));
     }
 

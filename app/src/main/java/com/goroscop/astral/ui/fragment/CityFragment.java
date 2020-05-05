@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import com.goroscop.astral.R;
 import com.goroscop.astral.ui.interfaces.RegistrationInterface;
 
+import java.util.Objects;
+
 import static android.text.TextUtils.isEmpty;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_CITY;
@@ -43,7 +45,7 @@ public class CityFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_city, container, false);
         EditText txtCity = view.findViewById(R.id.edt_city);
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mSettings = Objects.requireNonNull(getActivity()).getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         registrationInterface = (RegistrationInterface) getActivity();
 
         txtCity.addTextChangedListener(new TextWatcher() {

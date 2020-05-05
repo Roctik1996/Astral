@@ -1,0 +1,9 @@
+
+n
+java:S1450"SRemove the "male" field and declare it as a local variable in the relevant methods.(ÒµØõûÿÿÿÿ
+n
+java:S1128"SRemove this unused import 'com.goroscop.astral.utils.Const.APP_PREFERENCES_GENDER'.(Æ¼ŸÌÿÿÿÿÿ
+p
+java:S1450"URemove the "female" field and declare it as a local variable in the relevant methods.(ÒµØõûÿÿÿÿ
+n
+java:S1450"XRemove the "mSettings" field and declare it as a local variable in the relevant methods.(ö Ø

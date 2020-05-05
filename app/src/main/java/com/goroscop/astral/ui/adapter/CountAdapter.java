@@ -35,8 +35,6 @@ public class CountAdapter extends RecyclerView.Adapter<CountAdapter.CountViewHol
         countViewHolder.itemCount.setText(""+data.get(i));
     }
 
-
-
     @Override
     public int getItemCount() {
         return data.size();

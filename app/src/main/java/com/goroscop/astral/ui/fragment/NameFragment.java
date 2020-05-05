@@ -17,12 +17,13 @@ import androidx.fragment.app.Fragment;
 import com.goroscop.astral.R;
 import com.goroscop.astral.ui.interfaces.RegistrationInterface;
 
+import java.util.Objects;
+
 import static android.text.TextUtils.isEmpty;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
 
 public class NameFragment extends Fragment {
-    private EditText txtName;
     private String name = "";
     private RegistrationInterface registrationInterface;
     private SharedPreferences mSettings;
@@ -42,8 +43,8 @@ public class NameFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_name, container, false);
-        txtName = view.findViewById(R.id.edt_name);
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        EditText txtName = view.findViewById(R.id.edt_name);
+        mSettings = Objects.requireNonNull(getActivity()).getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         registrationInterface = (RegistrationInterface) getActivity();
 
         txtName.addTextChangedListener(new TextWatcher() {

@@ -26,6 +26,7 @@ import com.goroscop.astral.R;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
@@ -68,7 +69,7 @@ public class ElementFragment extends Fragment {
         progressBar = view.findViewById(R.id.progress);
         frame = view.findViewById(R.id.frame);
 
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mSettings = Objects.requireNonNull(getActivity()).getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         initInfo();
 
@@ -129,7 +130,7 @@ public class ElementFragment extends Fragment {
     }
 
     private void loadFragment(Fragment fragment) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
     }

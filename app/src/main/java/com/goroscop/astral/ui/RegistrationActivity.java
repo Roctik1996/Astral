@@ -155,12 +155,12 @@ public class RegistrationActivity extends MvpAppCompatActivity implements Regist
                     countPager.setCurrentItem(countPager.getCurrentItem() + 1);
                 }
                 if (error.equals("completed")) {
-                    registrationPresenter.registration(mSettings.getString(APP_PREFERENCES_NAME,""),
-                            mSettings.getString(APP_PREFERENCES_BIRTHDAY,""),
-                            mSettings.getString(APP_PREFERENCES_GENDER,""),
-                            mSettings.getString(APP_PREFERENCES_CITY,""),
-                            mSettings.getString(APP_PREFERENCES_EMAIL,""),
-                            mSettings.getString(APP_PREFERENCES_PASS,""));
+                    registrationPresenter.registration(mSettings.getString(APP_PREFERENCES_NAME, ""),
+                            mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""),
+                            mSettings.getString(APP_PREFERENCES_GENDER, ""),
+                            mSettings.getString(APP_PREFERENCES_CITY, ""),
+                            mSettings.getString(APP_PREFERENCES_EMAIL, ""),
+                            mSettings.getString(APP_PREFERENCES_PASS, ""));
                 }
             } else
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show();
@@ -169,20 +169,18 @@ public class RegistrationActivity extends MvpAppCompatActivity implements Regist
 
     @Override
     public void getToken(Token token) {
-        if (token!=null) {
-            if (token.getToken()!=null) {
+        if (token != null) {
+            if (token.getToken() != null) {
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString(APP_PREFERENCES_TOKEN, token.getToken());
                 editor.apply();
                 Intent mainActivity = new Intent(this, MainActivity.class);
                 startActivity(mainActivity);
                 finish();
-            }
-            else {
+            } else {
                 Toast.makeText(this, R.string.error_email_exist, Toast.LENGTH_LONG).show();
             }
-        }
-        else {
+        } else {
             Toast.makeText(this, R.string.error_email_exist, Toast.LENGTH_LONG).show();
         }
     }

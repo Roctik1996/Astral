@@ -57,12 +57,9 @@ public class MessagingService extends FirebaseMessagingService {
 
         notificationBuilder.setContentIntent(contentIntent);
 
-
-        // Gets an instance of the NotificationManager service
         NotificationManager mNotificationManager =
                 (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // Builds the notification and issues it.
         mNotificationManager.notify(new Random().nextInt(), notificationBuilder.build());
     }
 

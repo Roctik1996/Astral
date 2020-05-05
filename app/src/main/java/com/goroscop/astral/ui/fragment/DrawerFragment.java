@@ -20,6 +20,7 @@ import com.goroscop.astral.ui.interfaces.NavigationInterface;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
@@ -87,7 +88,7 @@ public class DrawerFragment extends Fragment {
             iconProPlanet.setVisibility(View.VISIBLE);
         }
 
-        SharedPreferences mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences mSettings = Objects.requireNonNull(getActivity()).getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         iconSign.setImageResource(avatarIcon.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
         Date date1 = new Date(Long.parseLong(mSettings.getString(APP_PREFERENCES_BIRTHDAY, "")) * 1000);

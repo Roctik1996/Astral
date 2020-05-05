@@ -1,10 +1,11 @@
 package com.goroscop.astral.utils;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MetalConst {
 
-    public static final HashMap<String, String> metalData = new HashMap<>();
+    public static final Map<String, String> metalData = new HashMap<>();
     static {
         metalData.put("Овен", "Золото\nЗнак стихии Огня, искренний и отважный Овен горит на работе и дома. " +
                 "И только жаркое и яркое, но в то же время гибкое золото способно поддержать неукротимое пламя овновского сердца. " +

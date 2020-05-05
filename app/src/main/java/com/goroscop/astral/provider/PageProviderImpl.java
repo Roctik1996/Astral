@@ -12,11 +12,11 @@ import io.reactivex.Single;
 public class PageProviderImpl {
     private Backend mBackendService;
 
-    public PageProviderImpl() {
+    PageProviderImpl() {
         initNetworkModule();
     }
 
-    protected void initNetworkModule() {
+    private void initNetworkModule() {
         mBackendService = NetworkModule.getBackEndService();
     }
 

@@ -21,6 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_BIRTHDAY;
@@ -29,7 +30,6 @@ public class BirthdayFragment extends Fragment implements DatePickerDialog.OnDat
 
     private Calendar now = Calendar.getInstance();
     private EditText txtBirthday;
-    private DatePickerDialog datePickerDialog;
     private RegistrationInterface registrationInterface;
     private Date date = null;
     private DateFormat formatter;
@@ -54,29 +54,24 @@ public class BirthdayFragment extends Fragment implements DatePickerDialog.OnDat
         txtBirthday = view.findViewById(R.id.edt_birthday);
         registrationInterface = (RegistrationInterface) getActivity();
 
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mSettings = Objects.requireNonNull(getActivity()).getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         formatter = new SimpleDateFormat("dd MMMM, yyyy");
 
 
 
-        datePickerDialog = DatePickerDialog.newInstance(
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
                 this,
-                now.get(Calendar.YEAR), // Initial year selection
-                now.get(Calendar.MONTH), // Initial month selection
-                now.get(Calendar.DAY_OF_MONTH) // Inital day selection
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
         );
         datePickerDialog.setVersion(DatePickerDialog.Version.VERSION_1);
-        txtBirthday.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
-                    datePickerDialog.show(getParentFragmentManager(), "DatePickerDialog");
-            }
+        txtBirthday.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus)
+                datePickerDialog.show(getParentFragmentManager(), "DatePickerDialog");
         });
-        txtBirthday.setOnClickListener(v -> {
-            datePickerDialog.show(getParentFragmentManager(), "DatePickerDialog");
-        });
+        txtBirthday.setOnClickListener(v -> datePickerDialog.show(getParentFragmentManager(), "DatePickerDialog"));
 
         return view;
     }

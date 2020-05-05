@@ -32,6 +32,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 import hiennguyen.me.circleseekbar.CircleSeekBar;
@@ -72,9 +73,7 @@ public class CompatibilityResultFragment extends Fragment {
         layoutPreview = view.findViewById(R.id.layout_preview);
         layoutContent = view.findViewById(R.id.layout_content);
 
-        ArrayList<String> data = new ArrayList<>();
-
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mSettings = Objects.requireNonNull(getActivity()).getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         avatar.setImageResource(avatarIcon.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
         avatarContent.setImageResource(avatarIcon.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, ""))));
@@ -82,22 +81,22 @@ public class CompatibilityResultFragment extends Fragment {
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
-            data.addAll(Const.datesSign.keySet());
+            ArrayList<String> data = new ArrayList<>(Const.datesSign.keySet());
             partnerIcon.setImageResource(avatarIcon.get(data.get(bundle.getInt("partner_sign"))));
             partnerIconContent.setImageResource(avatarIcon.get(data.get(bundle.getInt("partner_sign"))));
+
+            String mySign = signEn.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, "")));
+            String partnerSign = signEn.get(data.get(bundle.getInt("partner_sign")));
+
+            percent = generatePercent();
+            url = generateUrl(mySign, partnerSign);
         }
-
-        String mySign = signEn.get(getSign(mSettings.getString(APP_PREFERENCES_BIRTHDAY, "")));
-        String partnerSign = signEn.get(data.get(bundle.getInt("partner_sign")));
-
-        percent = generatePercent();
-        url = generateUrl(mySign, partnerSign);
 
         getPreview();
 
         btnMain.setOnClickListener(v -> loadFragment(new HomeFragment()));
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
             @Override
             public void handleOnBackPressed() {
                 loadFragment(new HomeFragment());
@@ -109,7 +108,7 @@ public class CompatibilityResultFragment extends Fragment {
     }
 
     private void loadFragment(Fragment fragment) {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
     }
@@ -196,7 +195,7 @@ public class CompatibilityResultFragment extends Fragment {
                 Elements newsHeadlines = doc.select("p");
                 result.append(newsHeadlines.get(2));
             } catch (IOException e) {
-                Log.d("TAG", e.getMessage());
+                Log.d("TAG", e.toString());
             }
             String data = result.toString().replaceAll("<p>", "").replaceAll("</p>", "");
 

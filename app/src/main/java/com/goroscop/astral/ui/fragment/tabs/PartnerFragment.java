@@ -18,6 +18,7 @@ import com.goroscop.astral.ui.adapter.SignAdapter;
 import com.goroscop.astral.utils.Const;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PartnerFragment extends Fragment implements SignAdapter.ItemClick {
 
@@ -48,7 +49,7 @@ public class PartnerFragment extends Fragment implements SignAdapter.ItemClick {
     }
 
     private void loadFragment(Fragment fragment) {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
     }

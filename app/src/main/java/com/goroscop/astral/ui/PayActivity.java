@@ -50,25 +50,23 @@ public class PayActivity extends MvpAppCompatActivity implements ViewGetPayUrl {
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
-        webView.setWebChromeClient(new WebChromeClient(){
+        webView.setWebChromeClient(new WebChromeClient() {
         });
 
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient() {
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                Log.d("PAGE_URL",url);
-                if (url.contains("7astral.ru/?Order_ID")){
+                Log.d("PAGE_URL", url);
+                if (url.contains("7astral.ru/?Order_ID")) {
                     onBackPressed();
                 }
             }
         });
 
-        if (mSettings.contains(APP_PREFERENCES_TOKEN)) {
-            if (!mSettings.getString(APP_PREFERENCES_TOKEN, "").equals("")) {
-                payPresenter.getPayUrl("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
-            }
+        if (mSettings.contains(APP_PREFERENCES_TOKEN) && !mSettings.getString(APP_PREFERENCES_TOKEN, "").equals("")) {
+            payPresenter.getPayUrl("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
         }
     }
 
@@ -81,7 +79,6 @@ public class PayActivity extends MvpAppCompatActivity implements ViewGetPayUrl {
 
     @Override
     public void getPayUrl(Pay url) {
-        System.out.println(url.getPreauthPaymentLink());
         webView.loadUrl(url.getPreauthPaymentLink());
     }
 

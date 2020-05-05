@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import hiennguyen.me.circleseekbar.CircleSeekBar;
@@ -150,19 +151,31 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         NavigationInterface navigationInterface = (NavigationInterface) getActivity();
 
         BackToHomeInterface backToHomeInterface = (BackToHomeInterface) getActivity();
+        assert backToHomeInterface != null;
         backToHomeInterface.onBack(true);
 
-        detailChina.setOnClickListener(v -> navigationInterface.onChinaPressed());
-        detailElement.setOnClickListener(v -> navigationInterface.onElementPressed());
-        detailMetal.setOnClickListener(v -> navigationInterface.onMetalPressed());
-        detailPlanet.setOnClickListener(v -> navigationInterface.onPlanetPressed());
+        detailChina.setOnClickListener(v -> {
+            assert navigationInterface != null;
+            navigationInterface.onChinaPressed();
+        });
+        detailElement.setOnClickListener(v -> {
+            assert navigationInterface != null;
+            navigationInterface.onElementPressed();
+        });
+        detailMetal.setOnClickListener(v -> {
+            assert navigationInterface != null;
+            navigationInterface.onMetalPressed();
+        });
+        detailPlanet.setOnClickListener(v -> {
+            assert navigationInterface != null;
+            navigationInterface.onPlanetPressed();
+        });
 
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
-        if (mSettings.contains(APP_PREFERENCES_TOKEN)) {
-            if (!mSettings.getString(APP_PREFERENCES_TOKEN, "").equals("")) {
-                horoscopePresenter.getHoroscope("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
-            }
+        if (mSettings.contains(APP_PREFERENCES_TOKEN) && !mSettings.getString(APP_PREFERENCES_TOKEN, "").equals("")) {
+            horoscopePresenter.getHoroscope("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
+
         }
 
         initPersonalInfo();
@@ -221,8 +234,7 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerLucky.setLayoutManager(layoutManager);
-        ArrayList<String> luckNum = new ArrayList<>();
-        luckNum.addAll(mSettings.getStringSet(APP_PREFERENCES_LUCK_NUMBER, null));
+        ArrayList<String> luckNum = new ArrayList<>(mSettings.getStringSet(APP_PREFERENCES_LUCK_NUMBER, null));
         recyclerLucky.setAdapter(new LuckyNumAdapter(luckNum));
 
         love.setProgressDisplayAndInvalidate(mSettings.getInt(APP_PREFERENCES_LOVE, 0));
@@ -381,7 +393,7 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
     }
 
     private void showDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         @SuppressLint("InflateParams")
         View dialogView = getLayoutInflater().inflate(R.layout.dialog, null);
         builder.setView(dialogView);
@@ -394,7 +406,7 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
             Intent intent = new Intent(getContext(), PayActivity.class);
             startActivity(intent);
             dialog.dismiss();
-            getActivity().finish();
+            Objects.requireNonNull(getActivity()).finish();
         });
 
         txtCancel.setOnClickListener(v -> dialog.dismiss());
