@@ -1,6 +1,7 @@
 package com.goroscop.astral.api;
 
 import com.goroscop.astral.model.Horoscope;
+import com.goroscop.astral.model.Pay;
 import com.goroscop.astral.model.Token;
 import com.goroscop.astral.model.User;
 
@@ -40,4 +41,7 @@ public interface Backend {
                              @Part("device_id") String deviceId,
                              @Part("type") String typeDevice,
                              @Part("active") Integer active);
+
+    @GET("/api/get_preauth_link")
+    Single<Pay> getPayUrl(@Header("Authorization") String token);
 }

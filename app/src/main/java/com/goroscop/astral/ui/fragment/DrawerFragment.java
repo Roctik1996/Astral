@@ -50,9 +50,13 @@ public class DrawerFragment extends Fragment {
         LinearLayout navPlanet = view.findViewById(R.id.layout_planet);
         LinearLayout navAbout = view.findViewById(R.id.layout_about);
         LinearLayout navExit = view.findViewById(R.id.layout_exit);
+        TextView txtCompatibility = view.findViewById(R.id.nav_compatibility);
+        TextView txtChina = view.findViewById(R.id.nav_china);
         TextView txtElement = view.findViewById(R.id.nav_element);
         TextView txtMetal = view.findViewById(R.id.nav_metal);
         TextView txtPlanet = view.findViewById(R.id.nav_planet);
+        ImageView iconProCompatibility = view.findViewById(R.id.pro_compatibility);
+        ImageView iconProChina = view.findViewById(R.id.pro_china);
         ImageView iconProElement = view.findViewById(R.id.pro_element);
         ImageView iconProMetal = view.findViewById(R.id.pro_metal);
         ImageView iconProPlanet = view.findViewById(R.id.pro_planet);
@@ -60,16 +64,24 @@ public class DrawerFragment extends Fragment {
         TextView txtYear = view.findViewById(R.id.nav_china_year);
 
         if (isPro) {
+            txtCompatibility.setAlpha(1f);
+            txtChina.setAlpha(1f);
             txtElement.setAlpha(1f);
             txtMetal.setAlpha(1f);
             txtPlanet.setAlpha(1f);
+            iconProCompatibility.setVisibility(View.GONE);
+            iconProChina.setVisibility(View.GONE);
             iconProElement.setVisibility(View.GONE);
             iconProMetal.setVisibility(View.GONE);
             iconProPlanet.setVisibility(View.GONE);
         } else {
+            txtCompatibility.setAlpha(0.5f);
+            txtChina.setAlpha(0.5f);
             txtElement.setAlpha(0.5f);
             txtMetal.setAlpha(0.5f);
             txtPlanet.setAlpha(0.5f);
+            iconProCompatibility.setVisibility(View.VISIBLE);
+            iconProChina.setVisibility(View.VISIBLE);
             iconProElement.setVisibility(View.VISIBLE);
             iconProMetal.setVisibility(View.VISIBLE);
             iconProPlanet.setVisibility(View.VISIBLE);

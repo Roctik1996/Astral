@@ -48,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +62,16 @@
             android:fontFamily="@font/poppins_bold"
             android:text="@string/nav_compatibility"
             android:textAllCaps="true"
+            android:alpha="0.5"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/pro_compatibility"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_pro" />
     </LinearLayout>
 
     <View
@@ -83,6 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +106,7 @@
             android:fontFamily="@font/poppins_bold"
             android:text="@string/nav_china"
             android:textAllCaps="true"
+            android:alpha="0.5"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
@@ -109,6 +120,13 @@
             android:alpha="0.5"
             android:textColor="@android:color/white"
             android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/pro_china"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_pro" />
     </LinearLayout>
 
     <View

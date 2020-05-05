@@ -4,6 +4,8 @@
     <string name="default_notification_channel_id">com.goroscop.astral.chanel</string>
     <string name="astral">Astral</string>
     <string name="personal_horoscop">Персональный гороскоп</string>
+    <string name="dialog_title">Персональный\nгороскоп</string>
+    <string name="dialog_btn">Далее</string>
     <string name="hint_email">EMAIL</string>
     <string name="hint_pass">ПАРОЛЬ</string>
     <string name="txt_login">Войти</string>
@@ -51,10 +53,6 @@
     <string name="element_compatibility">Совместимость с другими стихиями</string>
     <string name="success_day">Успешность дня</string>
     <string name="choose_sign">Выберите знак</string>
-    <string name="hint_card_num">Введите номер карты</string>
-    <string name="mm">ММ</string>
-    <string name="yy">УУ</string>
-    <string name="cvv">CVV</string>
     <string name="btn_pay">Оплатить</string>
     <string name="you_sign">Ваш знак</string>
     <string name="partner_sign">знак партнера</string>
@@ -74,4 +72,10 @@
     <string name="license">Лицензионное соглашение</string>
     <string name="site">Открыть сайт</string>
     <string name="support">Написать поддержке</string>
+    <string name="dialog_content">У ВАС ОГРАНИЧЕН ДОСТУП.\nПопробуйте бесплатно все функции приложения.</string>
+    <string name="btn_trial">Активировать триал</string>
+    <string name="cb_text">Даю согласие на <a href="https://7astral.ru/">обработку персональных данных</a>.
+        Ознакомлен и согласен с <a href="https://7astral.ru/">договором публичной оферты</a>.
+        Уведомлен, что за услугу аутентификации и активацию сервиса может взиматься плата.
+        Подтверждаю согласие с <a href="https://7astral.ru/">политикой обработки персональных данных</a>.</string>
 </resources>

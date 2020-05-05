@@ -16,9 +16,15 @@ public class User {
     @SerializedName("birthday")
     @Expose
     private String birthday;
+
     @SerializedName("is_pro")
     @Expose
     private Boolean isPro;
+
+    @SerializedName("is_trial")
+    @Expose
+    private Boolean isTrial;
+
     @SerializedName("city")
     @Expose
     private String city;
@@ -61,6 +67,14 @@ public class User {
 
     public void setIsPro(Boolean isPro) {
         this.isPro = isPro;
+    }
+
+    public Boolean getTrial() {
+        return isTrial;
+    }
+
+    public void setTrial(Boolean trial) {
+        isTrial = trial;
     }
 
     public String getCity() {

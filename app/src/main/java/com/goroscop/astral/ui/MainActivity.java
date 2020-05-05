@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -27,6 +30,7 @@ import com.goroscop.astral.R;
 import com.goroscop.astral.model.User;
 import com.goroscop.astral.presenter.DevicePresenter;
 import com.goroscop.astral.presenter.UserPresenter;
+import com.goroscop.astral.ui.dialog.PreviewDialog;
 import com.goroscop.astral.ui.fragment.DrawerFragment;
 import com.goroscop.astral.ui.fragment.tabs.AboutFragment;
 import com.goroscop.astral.ui.fragment.tabs.ChinaFragment;
@@ -48,6 +52,7 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_IS_FIRST;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_NAME;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_PRO;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TRIAL;
 
 public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, ViewSetDevice, NavigationInterface, BackToHomeInterface {
     private DrawerLayout drawerLayout;
@@ -57,6 +62,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
     private TextView title;
     private ImageView proIcon;
     private Fragment currentFragment;
+    private DialogFragment previewDialog;
     private final String TAG = MainActivity.class.getSimpleName();
 
     @InjectPresenter
@@ -81,21 +87,18 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
 
         iconMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
-        if (mSettings.contains(APP_PREFERENCES_IS_FIRST)) {
-            if (!mSettings.getString(APP_PREFERENCES_IS_FIRST, "").equals("")) {
-                loadFragment(new HomeFragment());
-                loadMenu();
-                initMainTitle();
-            } else
-                userPresenter.getUser("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
-        } else
-            userPresenter.getUser("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
+        userPresenter.getUser("Token " + mSettings.getString(APP_PREFERENCES_TOKEN, ""));
+
+        proIcon.setOnClickListener(v -> {
+            previewDialog = new PreviewDialog();
+            previewDialog.show(getSupportFragmentManager(), "dlg1");
+        });
 
     }
 
     private void initMainTitle() {
         if (mSettings.contains(APP_PREFERENCES_PRO)) {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 title.setText(R.string.personal_horoscop);
                 proIcon.setVisibility(View.GONE);
             } else {
@@ -128,27 +131,40 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
 
     private void loadMenu() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_menu, new DrawerFragment(this, mSettings.getBoolean(APP_PREFERENCES_PRO, false)));
-        ft.commit();
+        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
+            ft.replace(R.id.frame_menu, new DrawerFragment(this, true));
+            ft.commit();
+        } else {
+            ft.replace(R.id.frame_menu, new DrawerFragment(this, false));
+            ft.commit();
+        }
     }
 
-    @SuppressLint("SetTextI18n")
-    private void showDialog(String page) {
+    private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         @SuppressLint("InflateParams")
         View dialogView = getLayoutInflater().inflate(R.layout.dialog, null);
         builder.setView(dialogView);
-        TextView txtInfo = dialogView.findViewById(R.id.txt_alert);
         TextView txtCancel = dialogView.findViewById(R.id.txt_cancel);
         TextView btnPay = dialogView.findViewById(R.id.btn_pay);
-        txtInfo.setText("Для приобретения раздела “" + page + "”, перейдите на страницу оплаты");
+        TextView txtRules = dialogView.findViewById(R.id.txt_rules);
+        CheckBox checkBox = dialogView.findViewById(R.id.checkbox);
 
+        txtRules.setMovementMethod(LinkMovementMethod.getInstance());
         AlertDialog dialog = builder.create();
         dialog.setCancelable(false);
-        btnPay.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PayActivity.class);
-            startActivity(intent);
-            dialog.dismiss();
+
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                btnPay.setOnClickListener(v -> {
+                    Intent intent = new Intent(this, PayActivity.class);
+                    startActivity(intent);
+                    dialog.dismiss();
+                    finish();
+                });
+            }
+
+
         });
 
         txtCancel.setOnClickListener(v -> dialog.dismiss());
@@ -164,7 +180,8 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             editor.putString(APP_PREFERENCES_BIRTHDAY, user.getBirthday());
             editor.putString(APP_PREFERENCES_GENDER, user.getGender());
             editor.putString(APP_PREFERENCES_CITY, user.getCity());
-            editor.putBoolean(APP_PREFERENCES_PRO, true);
+            editor.putBoolean(APP_PREFERENCES_PRO, user.getIsPro());
+            editor.putBoolean(APP_PREFERENCES_TRIAL, user.getTrial());
             editor.apply();
             loadFragment(new HomeFragment());
             loadMenu();
@@ -205,7 +222,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         if (currentFragment instanceof HomeFragment) {
             Log.d(TAG, "Fragment is opened now");
         } else {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 title.setText(R.string.personal_horoscop);
                 loadFragment(new HomeFragment());
             } else {
@@ -224,9 +241,12 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         if (currentFragment instanceof CompatibilityFragment) {
             Log.d(TAG, "Fragment is opened now");
         } else {
-            loadFragment(new CompatibilityFragment());
-            title.setText(getString(R.string.nav_compatibility));
-            proIcon.setVisibility(View.GONE);
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
+                title.setText(R.string.nav_compatibility);
+                loadFragment(new CompatibilityFragment());
+            } else {
+                showDialog();
+            }
         }
 
     }
@@ -239,9 +259,12 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         if (currentFragment instanceof ChinaFragment) {
             Log.d(TAG, "Fragment is opened now");
         } else {
-            loadFragment(new ChinaFragment());
-            title.setText(getString(R.string.nav_china));
-            proIcon.setVisibility(View.GONE);
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
+                title.setText(R.string.nav_china);
+                loadFragment(new ChinaFragment());
+            } else {
+                showDialog();
+            }
         }
     }
 
@@ -253,11 +276,11 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         if (currentFragment instanceof ElementFragment) {
             Log.d(TAG, "Fragment is opened now");
         } else {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 title.setText(R.string.nav_element);
                 loadFragment(new ElementFragment());
             } else {
-                showDialog(getString(R.string.nav_element));
+                showDialog();
             }
         }
     }
@@ -270,11 +293,11 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         if (currentFragment instanceof MetalFragment) {
             Log.d(TAG, "Fragment is opened now");
         } else {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 title.setText(R.string.nav_metal);
                 loadFragment(new MetalFragment());
             } else {
-                showDialog(getString(R.string.nav_metal));
+                showDialog();
             }
         }
     }
@@ -287,11 +310,11 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         if (currentFragment instanceof PlanetFragment) {
             Log.d(TAG, "Fragment is opened now");
         } else {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 title.setText(R.string.nav_planet);
                 loadFragment(new PlanetFragment());
             } else {
-                showDialog(getString(R.string.nav_planet));
+                showDialog();
             }
         }
     }
@@ -316,7 +339,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         SharedPreferences.Editor editor = mSettings.edit();
         editor.clear();
         editor.apply();
-        Intent loginActivity = new Intent(this,LoginActivity.class);
+        Intent loginActivity = new Intent(this, LoginActivity.class);
         startActivity(loginActivity);
         finish();
     }
@@ -325,7 +348,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
     public void onBack(boolean isHome) {
         if (isHome) {
             if (mSettings.contains(APP_PREFERENCES_PRO)) {
-                if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+                if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                     title.setText(R.string.personal_horoscop);
                     proIcon.setVisibility(View.GONE);
                 } else {

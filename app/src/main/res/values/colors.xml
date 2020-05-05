@@ -23,4 +23,5 @@
 
     <color name="colorTabLine">#CDBCFF</color>
     <color name="colorDialog">#4D008A</color>
+    <color name="colorDotsInactive">#8E00FF</color>
 </resources>

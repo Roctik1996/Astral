@@ -2,6 +2,7 @@ package com.goroscop.astral.ui.fragment.tabs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -33,6 +35,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.goroscop.astral.R;
 import com.goroscop.astral.model.Horoscope;
 import com.goroscop.astral.presenter.HoroscopePresenter;
+import com.goroscop.astral.ui.PayActivity;
 import com.goroscop.astral.ui.adapter.LuckyNumAdapter;
 import com.goroscop.astral.ui.fragment.HoroscopeFragment;
 import com.goroscop.astral.ui.interfaces.BackToHomeInterface;
@@ -71,6 +74,7 @@ import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TODAY;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TODAY_SUCCESS;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOKEN;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TOMORROW;
+import static com.goroscop.astral.utils.Const.APP_PREFERENCES_TRIAL;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_WEEK;
 import static com.goroscop.astral.utils.Const.APP_PREFERENCES_YEAR;
 import static com.goroscop.astral.utils.Const.avatarIcon;
@@ -204,7 +208,7 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
     private void initHome() {
 
         if (mSettings.contains(APP_PREFERENCES_PRO)) {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false)) {
+            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 contentPro.setVisibility(View.VISIBLE);
                 initProContent();
             } else {
@@ -325,7 +329,7 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         year.setText(tabTitle[4]);
         tabLayout.addTab(year);
 
-        tabLayout.selectTab(today,true);
+        tabLayout.selectTab(today, true);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -335,18 +339,39 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
                         loadFragment(new HoroscopeFragment(horoscopeData.get(0), success));
                         break;
                     case 1:
-                        loadFragment(new HoroscopeFragment(horoscopeData.get(1), -1));
+                        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
+                            loadFragment(new HoroscopeFragment(horoscopeData.get(1), -1));
+                        } else {
+                            tabLayout.selectTab(today, true);
+                            showDialog();
+                        }
+
                         break;
                     case 2:
-                        loadFragment(new HoroscopeFragment(horoscopeData.get(2), -1));
+                        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
+                            loadFragment(new HoroscopeFragment(horoscopeData.get(2), -1));
+                        } else {
+                            tabLayout.selectTab(today, true);
+                            showDialog();
+                        }
                         break;
 
                     case 3:
-                        loadFragment(new HoroscopeFragment(horoscopeData.get(3), -1));
+                        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
+                            loadFragment(new HoroscopeFragment(horoscopeData.get(3), -1));
+                        } else {
+                            tabLayout.selectTab(today, true);
+                            showDialog();
+                        }
                         break;
 
                     case 4:
-                        loadFragment(new HoroscopeFragment(horoscopeData.get(4), -1));
+                        if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
+                            loadFragment(new HoroscopeFragment(horoscopeData.get(4), -1));
+                        } else {
+                            tabLayout.selectTab(today, true);
+                            showDialog();
+                        }
                         break;
                 }
             }
@@ -361,6 +386,28 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
 
             }
         });
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        @SuppressLint("InflateParams")
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog, null);
+        builder.setView(dialogView);
+        TextView txtCancel = dialogView.findViewById(R.id.txt_cancel);
+        TextView btnPay = dialogView.findViewById(R.id.btn_pay);
+
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        btnPay.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), PayActivity.class);
+            startActivity(intent);
+            dialog.dismiss();
+            getActivity().finish();
+        });
+
+        txtCancel.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
     private void loadFragment(Fragment fragment) {

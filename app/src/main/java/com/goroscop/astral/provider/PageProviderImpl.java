@@ -2,6 +2,7 @@ package com.goroscop.astral.provider;
 
 import com.goroscop.astral.api.Backend;
 import com.goroscop.astral.model.Horoscope;
+import com.goroscop.astral.model.Pay;
 import com.goroscop.astral.model.Token;
 import com.goroscop.astral.model.User;
 import com.goroscop.astral.network.NetworkModule;
@@ -46,6 +47,10 @@ public class PageProviderImpl {
                                     String typeDevice,
                                     Integer active) {
         return mBackendService.setDevice(token, fcmToken, deviceId, typeDevice, active);
+    }
+
+    public Single<Pay> getPayUrl(String token) {
+        return mBackendService.getPayUrl(token);
     }
 
 

@@ -1,7 +1,9 @@
 package com.goroscop.astral.utils;
 
 import com.goroscop.astral.R;
+import com.goroscop.astral.model.Preview;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -19,6 +21,7 @@ public class Const {
     public static final String APP_PREFERENCES_IS_FIRST = "is_first";
     public static final String APP_PREFERENCES_PLANET = "planet";
     public static final String APP_PREFERENCES_PRO = "pro";
+    public static final String APP_PREFERENCES_TRIAL = "trial";
 
     public static final String APP_PREFERENCES_TODAY = "today";
     public static final String APP_PREFERENCES_TODAY_SUCCESS = "success_today";
@@ -32,6 +35,14 @@ public class Const {
     public static final String APP_PREFERENCES_LOVE = "love";
     public static final String APP_PREFERENCES_HEALTH = "health";
     public static final String APP_PREFERENCES_CAREER = "career";
+
+    public static final ArrayList<Preview> previewData = new ArrayList<>();
+    static {
+        previewData.add(new Preview(R.drawable.ic_yin_yang,"Узнайте свой гороскоп по китайскому календарю"));
+        previewData.add(new Preview(R.drawable.ic_love,"Посмотрите совместимость ваших знаков зодиака"));
+        previewData.add(new Preview(R.drawable.ic_gold,"Узнайте подробности о Вашем металле, планете и стихии"));
+        previewData.add(new Preview(R.drawable.ic_astrology,"Для приобретения персонального гороскопа, перейдите на страницу оплаты"));
+    }
 
 
     public static final String[] tabTitle = new String[]{"Сегодня",
