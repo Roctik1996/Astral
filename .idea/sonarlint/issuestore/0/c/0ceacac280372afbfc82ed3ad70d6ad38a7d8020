@@ -1,9 +1,5 @@
 
 H
-java:S1113."-Do not override the Object.finalize() method.(ÖÒ˜Ùùÿÿÿÿ
-G
-java:S1602'",Remove useless curly braces around statement(°‚˜§üÿÿÿÿ
+java:S1113*"-Do not override the Object.finalize() method.(ÖÒ˜Ùùÿÿÿÿ
 N
-java:S21651"3Remove this nullification of "compositeDisposable".(¡ñÊÿÿÿÿÿ
-G
-java:S1602$",Remove useless curly braces around statement(ôàÅªşÿÿÿÿ
+java:S2165-"3Remove this nullification of "compositeDisposable".(¡ñÊÿÿÿÿÿ

@@ -1,17 +1,5 @@
 
-F
-java:S1148´"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8éÔâÕœ.
-e
-java:S5361É"HReplace this call to "replaceAll()" by a call to the "replace()" method.(Û•	8éÔâÕœ.
-d
-java:S2142³"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8éÔâÕœ.
-`
-java:S2259["DA "NullPointerException" could be thrown; "bundle" is nullable here.(¹+8éÔâÕœ.
-y
-java:S1488É"\Immediately return this expression instead of assigning it to the temporary variable "data".(Û•	8éÔâÕœ.
-:
-java:S2119y"Save and re-use this "Random".(¼İÅf8éÔâÕœ.
 o
-java:S1192V"MDefine a constant instead of duplicating this literal "partner_sign" 3 times.(Õ­Æøÿÿÿÿ8éÔâÕœ.
-e
-java:S5361É"HReplace this call to "replaceAll()" by a call to the "replace()" method.(Û•	8éÔâÕœ.
+java:S1192U"MDefine a constant instead of duplicating this literal "partner_sign" 3 times.(Õ­Æøÿÿÿÿ8éÔâÕœ.
+y
+java:S1488È"\Immediately return this expression instead of assigning it to the temporary variable "data".(Û•	8éÔâÕœ.

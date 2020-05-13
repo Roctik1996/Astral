@@ -72,7 +72,7 @@
     <string name="license">Лицензионное соглашение</string>
     <string name="site">Открыть сайт</string>
     <string name="support">Написать поддержке</string>
-    <string name="dialog_content">У ВАС ОГРАНИЧЕН ДОСТУП.\nПопробуйте бесплатно все функции приложения.</string>
+    <string name="dialog_content">У ВАС ОГРАНИЧЕН ДОСТУП\nПопробуйте бесплатно все функции приложения</string>
     <string name="btn_trial">Активировать триал</string>
     <string name="cb_text">Даю согласие на <a href="https://7astral.ru/">обработку персональных данных</a>.
         Ознакомлен и согласен с <a href="https://7astral.ru/">лицензионным договором</a>, в том числе с условиями оплаты.

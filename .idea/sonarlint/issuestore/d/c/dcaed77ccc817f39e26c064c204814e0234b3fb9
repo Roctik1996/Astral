@@ -1,8 +1,5 @@
 
 >
-java:S11858"(Remove this method to simply inherit it.(ÛÙÊı
-S	java:S106M"9Replace this use of System.out or System.err by a logger.(Š˜‹Îıÿÿÿÿ
-…
-java:S1319"oThe type of the "data" object should be an interface such as "List" rather than the implementation "ArrayList".(É˜©³
+java:S11859"(Remove this method to simply inherit it.(ÛÙÊı
 F
-java:S1172L"+Remove this unused method parameter "view".(Ì¤Èÿÿÿÿÿ
+java:S1172M"+Remove this unused method parameter "view".(Ì¤Èÿÿÿÿÿ

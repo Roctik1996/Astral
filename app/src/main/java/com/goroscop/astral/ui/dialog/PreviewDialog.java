@@ -49,6 +49,9 @@ public class PreviewDialog extends DialogFragment {
         PageIndicatorView pageIndicatorView = view.findViewById(R.id.pageIndicatorView);
         TextView txtCancel = view.findViewById(R.id.txt_cancel);
         btnNext = view.findViewById(R.id.btn_next);
+        CheckBox checkBox = view.findViewById(R.id.checkbox);
+        TextView txtRules = view.findViewById(R.id.txt_rules);
+        txtRules.setMovementMethod(LinkMovementMethod.getInstance());
 
         pageIndicatorView.setCount(4);
         pageIndicatorView.setSelection(2);
@@ -67,21 +70,26 @@ public class PreviewDialog extends DialogFragment {
                     txtCancel.setVisibility(View.VISIBLE);
                     pageIndicatorView.setVisibility(View.GONE);
                     btnNext.setText(R.string.btn_trial);
-                }
-                else{
+                    txtRules.setVisibility(View.VISIBLE);
+                    checkBox.setVisibility(View.VISIBLE);
+                }else {
                     txtCancel.setVisibility(View.GONE);
                     pageIndicatorView.setVisibility(View.VISIBLE);
                     btnNext.setText(R.string.dialog_btn);
+                    txtRules.setVisibility(View.GONE);
+                    checkBox.setVisibility(View.GONE);
                 }
             }
         });
 
         btnNext.setOnClickListener(v -> {
-            if (btnNext.getText().toString().equals(getString(R.string.btn_trial))) {
-                Intent intent = new Intent(getContext(), PayActivity.class);
-                startActivity(intent);
-                dismiss();
-                getActivity().finish();
+            if (checkBox.isChecked()) {
+                if (btnNext.getText().toString().equals(getString(R.string.btn_trial))) {
+                    Intent intent = new Intent(getContext(), PayActivity.class);
+                    startActivity(intent);
+                    dismiss();
+                    getActivity().finish();
+                }
             } else
                 previewPager.setCurrentItem(previewPager.getCurrentItem() + 1);
 

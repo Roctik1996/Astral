@@ -9,10 +9,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -399,14 +401,24 @@ public class HomeFragment extends MvpAppCompatFragment implements ViewHoroscope 
         builder.setView(dialogView);
         TextView txtCancel = dialogView.findViewById(R.id.txt_cancel);
         TextView btnPay = dialogView.findViewById(R.id.btn_pay);
+        TextView txtRules = dialogView.findViewById(R.id.txt_rules);
+        CheckBox checkBox = dialogView.findViewById(R.id.checkbox);
 
+        txtRules.setMovementMethod(LinkMovementMethod.getInstance());
         AlertDialog dialog = builder.create();
         dialog.setCancelable(false);
-        btnPay.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), PayActivity.class);
-            startActivity(intent);
-            dialog.dismiss();
-            Objects.requireNonNull(getActivity()).finish();
+
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                btnPay.setOnClickListener(v -> {
+                    Intent intent = new Intent(getContext(), PayActivity.class);
+                    startActivity(intent);
+                    dialog.dismiss();
+                    getActivity().finish();
+                });
+            }
+
+
         });
 
         txtCancel.setOnClickListener(v -> dialog.dismiss());
