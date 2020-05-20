@@ -53,5 +53,9 @@ public class PageProviderImpl {
         return mBackendService.getPayUrl(token);
     }
 
+    public Single<String> cancelSubscription(String token) {
+        return mBackendService.cancelSubscription(token);
+    }
+
 
 }

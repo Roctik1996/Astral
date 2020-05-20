@@ -159,12 +159,6 @@ Y
 )app/src/main/res/drawable/ic_yin_yang.xml,a\1\a1386b5cc2c0e3ed5b951b7e2b134e06e66e7730
 X
 (app/src/main/res/layout/activity_pay.xml,6\d\6d0dbbdf64a71f82ed21832d8f7465355c06e961
-Y
-)app/src/main/res/layout/drawer_layout.xml,3\8\38a4807f821744ce8fee7bc13f1623a166644ceb
-R
-"app/src/main/res/values/styles.xml,f\7\f79cc2688e29fcbc286fda14ae07b27c9e83690f
-R
-"app/src/main/res/layout/dialog.xml,1\1\115456bb68cac2a1a19c026e5ab19841c4599c0f
 f
 6app/src/main/java/com/goroscop/astral/model/China.java,e\2\e28d4176d3ec67aad84c3bff43137c949a544af1
 f

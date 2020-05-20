@@ -97,18 +97,8 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
     }
 
     private void initMainTitle() {
-        if (mSettings.contains(APP_PREFERENCES_PRO)) {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
-                title.setText(R.string.personal_horoscop);
-                proIcon.setVisibility(View.GONE);
-            } else {
-                title.setText("");
-                proIcon.setVisibility(View.VISIBLE);
-            }
-        } else {
-            title.setText("");
-            proIcon.setVisibility(View.VISIBLE);
-        }
+        title.setText("");
+        proIcon.setVisibility(View.VISIBLE);
     }
 
     private void uploadDeviceId() {
@@ -222,14 +212,9 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
         if (currentFragment instanceof HomeFragment) {
             Log.d(TAG, "Fragment is opened now");
         } else {
-            if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
-                title.setText(R.string.personal_horoscop);
-                loadFragment(new HomeFragment());
-            } else {
-                loadFragment(new HomeFragment());
-                title.setText("");
-                proIcon.setVisibility(View.VISIBLE);
-            }
+            loadFragment(new HomeFragment());
+            title.setText("");
+            proIcon.setVisibility(View.VISIBLE);
         }
     }
 
@@ -244,6 +229,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 title.setText(R.string.nav_compatibility);
                 loadFragment(new CompatibilityFragment());
+                proIcon.setVisibility(View.GONE);
             } else {
                 showDialog();
             }
@@ -262,6 +248,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 title.setText(R.string.nav_china);
                 loadFragment(new ChinaFragment());
+                proIcon.setVisibility(View.GONE);
             } else {
                 showDialog();
             }
@@ -279,6 +266,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 title.setText(R.string.nav_element);
                 loadFragment(new ElementFragment());
+                proIcon.setVisibility(View.GONE);
             } else {
                 showDialog();
             }
@@ -296,6 +284,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 title.setText(R.string.nav_metal);
                 loadFragment(new MetalFragment());
+                proIcon.setVisibility(View.GONE);
             } else {
                 showDialog();
             }
@@ -313,6 +302,7 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
             if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
                 title.setText(R.string.nav_planet);
                 loadFragment(new PlanetFragment());
+                proIcon.setVisibility(View.GONE);
             } else {
                 showDialog();
             }
@@ -347,18 +337,8 @@ public class MainActivity extends MvpAppCompatActivity implements ViewGetUser, V
     @Override
     public void onBack(boolean isHome) {
         if (isHome) {
-            if (mSettings.contains(APP_PREFERENCES_PRO)) {
-                if (mSettings.getBoolean(APP_PREFERENCES_PRO, false) || mSettings.getBoolean(APP_PREFERENCES_TRIAL, false)) {
-                    title.setText(R.string.personal_horoscop);
-                    proIcon.setVisibility(View.GONE);
-                } else {
-                    title.setText("");
-                    proIcon.setVisibility(View.VISIBLE);
-                }
-            } else {
-                title.setText("");
-                proIcon.setVisibility(View.VISIBLE);
-            }
+            title.setText("");
+            proIcon.setVisibility(View.VISIBLE);
         }
     }
 }

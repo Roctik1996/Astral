@@ -44,4 +44,7 @@ public interface Backend {
 
     @GET("/api/get_preauth_link")
     Single<Pay> getPayUrl(@Header("Authorization") String token);
+
+    @POST("/api/cancel_subscription/")
+    Single<String> cancelSubscription(@Header("Authorization") String token);
 }

@@ -35,18 +35,18 @@ public class AboutFragment extends Fragment {
 
 
         rulesFirst.setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com"));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://7astral.ru/oferta.pdf"));
             startActivity(browserIntent);
         });
 
         rulesSecond.setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com"));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://7astral.ru"));
             startActivity(browserIntent);
         });
 
         rulesThird.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri data = Uri.parse("mailto:recipient@example.com");
+            Uri data = Uri.parse("mailto:support@7astral.ru");
             intent.setData(data);
             startActivity(intent);
         });

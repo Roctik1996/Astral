@@ -18,9 +18,11 @@ import java.util.ArrayList;
 public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.CountViewHolder> {
 
     private ArrayList<Preview> data;
+    private boolean isPro;
 
-    public PreviewAdapter(ArrayList<Preview> data) {
+    public PreviewAdapter(ArrayList<Preview> data, boolean isPro) {
         this.data = data;
+        this.isPro = isPro;
     }
 
     @NonNull
@@ -33,7 +35,11 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.CountVie
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CountViewHolder countViewHolder, int i) {
-        countViewHolder.txtPreview.setText(""+data.get(i).getInfo());
+        if (isPro && i == data.size() - 1)
+            countViewHolder.txtPreview.setVisibility(View.GONE);
+        else
+            countViewHolder.txtPreview.setVisibility(View.VISIBLE);
+        countViewHolder.txtPreview.setText("" + data.get(i).getInfo());
         countViewHolder.iconPreview.setImageResource(data.get(i).getIconResource());
     }
 
